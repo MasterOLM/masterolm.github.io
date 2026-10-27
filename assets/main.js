@@ -1,14 +1,15 @@
 (function () {
   var KEY = 'site-lang';
+  var root = document.documentElement;
   var titles = {
-    ru: 'Олег Москвичев — разработка и интеграция 1С',
-    en: 'Oleg Moskvichev — 1C development & integration'
+    ru: root.getAttribute('data-title-ru') || 'Олег Москвичев — разработка и интеграция 1С',
+    en: root.getAttribute('data-title-en') || 'Oleg Moskvichev — 1C development & integration'
   };
   var buttons = document.querySelectorAll('[data-set-lang]');
 
   function apply(lang) {
-    document.documentElement.lang = lang;
-    if (!document.documentElement.hasAttribute('data-static-title')) {
+    root.lang = lang;
+    if (!root.hasAttribute('data-static-title')) {
       document.title = titles[lang] || titles.ru;
     }
     buttons.forEach(function (btn) {

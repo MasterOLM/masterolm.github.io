@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ru" data-title-ru="Обмен JSON — УТ/КА/ЕРП → БП 3.0" data-title-en="JSON Exchange — UT/KA/ERP → BP 3.0">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обмен JSON — УТ/КА/ЕРП → БП 3.0</title>
+  <meta name="description" content="Расширения 1С для ежедневного переноса документов из УТ 11.5, КА 2.5 и ЕРП 2.5 в Бухгалтерию предприятия 3.0: обмен JSON, регламент, протоколы, защита от дублей.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0f14">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/product.css">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="Обмен JSON — УТ/КА/ЕРП → БП 3.0">
+  <meta property="og:description" content="Ежедневный автоматический перенос документов из торгового контура в бухгалтерию. Расширения 1С, без доработки типовых.">
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="back" href="index.html">
+        <span aria-hidden="true">←</span>
+        <span class="i18n-ru">На главную</span>
+        <span class="i18n-en">Back to home</span>
+      </a>
+      <div class="lang-switch inline" role="group" aria-label="Язык / Language">
+        <button type="button" data-set-lang="ru" lang="ru">RU</button>
+        <button type="button" data-set-lang="en" lang="en">EN</button>
+      </div>
+    </div>
+
+    <header class="hero card">
+      <p class="eyebrow">
+        <span class="i18n-ru">Продукт</span>
+        <span class="i18n-en">Product</span>
+      </p>
+
+      <h1>
+        <span class="i18n-ru">Обмен JSON</span>
+        <span class="i18n-en">JSON Exchange</span>
+      </h1>
+
+      <p class="role">
+        <span class="i18n-ru">УТ 11.5 / КА 2.5 / ЕРП 2.5 → БП 3.0</span>
+        <span class="i18n-en">UT 11.5 / KA 2.5 / ERP 2.5 → BP 3.0</span>
+      </p>
+
+      <p class="lead">
+        <span class="i18n-ru">Ежедневный автоматический перенос документов из торгового контура в бухгалтерию: реализации, поступления, счета-фактуры, корректировки и розничные продажи. Два расширения — источник и приёмник, без доработки типовых конфигураций и без прямого соединения баз.</span>
+        <span class="i18n-en">Day-to-day automated transfer of documents from the operational contour into accounting: sales, purchases, invoices, adjustments and retail sales. Two extensions — source and target — with no changes to standard configurations and no direct database connection.</span>
+      </p>
+
+      <div class="badges">
+        <span class="badge">
+          <span class="i18n-ru">Расширение 1С</span>
+          <span class="i18n-en">1C extension</span>
+        </span>
+        <span class="badge">
+          <span class="i18n-ru">Демо 7 дней</span>
+          <span class="i18n-en">7-day demo</span>
+        </span>
+        <span class="badge">
+          <span class="i18n-ru">Типовые остаются на поддержке</span>
+          <span class="i18n-en">Standard configs stay supported</span>
+        </span>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:m_aster@bk.ru?subject=%D0%9E%D0%B1%D0%BC%D0%B5%D0%BD%20JSON%3A%20%D0%B4%D0%B5%D0%BC%D0%BE">
+          <span class="i18n-ru">Запросить демо</span>
+          <span class="i18n-en">Request a demo</span>
+        </a>
+        <a class="btn" href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn" href="#video">
+          <span class="i18n-ru">Видео-демо</span>
+          <span class="i18n-en">Video demo</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="what-title">
+        <h2 id="what-title">
+          <span class="i18n-ru">Что переносится</span>
+          <span class="i18n-en">What is transferred</span>
+        </h2>
+
+        <ul class="checks">
+          <li>
+            <span class="i18n-ru">Реализации товаров и услуг</span>
+            <span class="i18n-en">Sales of goods and services</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Поступления (приобретения) товаров и услуг</span>
+            <span class="i18n-en">Purchases of goods and services</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Счета-фактуры выданные и полученные, включая корректировочные</span>
+            <span class="i18n-en">Issued and received invoices, including corrective ones</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Корректировки реализаций и поступлений</span>
+            <span class="i18n-en">Sales and purchase adjustments</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Отчёты о розничных продажах (ОРП) — отдельный контур настроек</span>
+            <span class="i18n-en">Retail sales reports — a separate settings contour</span>
+          </li>
+        </ul>
+
+        <p class="hint">
+          <span class="i18n-ru">Связанные документы (например, счёт-фактура к реализации) попадают в пакет автоматически.</span>
+          <span class="i18n-en">Related documents (for example, an invoice linked to a sale) are included in the package automatically.</span>
+        </p>
+      </section>
+
+      <section aria-labelledby="features-title">
+        <h2 id="features-title">
+          <span class="i18n-ru">Возможности</span>
+          <span class="i18n-en">Features</span>
+        </h2>
+
+        <ul class="grid">
+          <li class="card point">
+            <span class="num">01</span>
+            <h3>
+              <span class="i18n-ru">Ручной и регламентный режим. Обработки «Выгрузка» и «Загрузка» с фоном и прогрессом; расписание ежедневно, отдельные задания для основного контура и ОРП.</span>
+              <span class="i18n-en">Manual and scheduled modes. “Export” and “Import” tools with background run and progress; daily schedules, separate jobs for the main contour and retail.</span>
+            </h3>
+          </li>
+          <li class="card point">
+            <span class="num">02</span>
+            <h3>
+              <span class="i18n-ru">Большие объёмы. Многопоточная подготовка и загрузка включается по объёму, порог настраивается — или принудительно один поток.</span>
+              <span class="i18n-en">Large volumes. Multi-threaded preparation and loading is enabled by volume with a configurable threshold — or forced single-threaded.</span>
+            </h3>
+          </li>
+          <li class="card point">
+            <span class="num">03</span>
+            <h3>
+              <span class="i18n-ru">Без дублей. Повторная загрузка пакета не создаёт дубли: соответствия «источник → приёмник» сохраняются.</span>
+              <span class="i18n-en">No duplicates. Re-loading a package does not create duplicates: source → target mappings are stored.</span>
+            </h3>
+          </li>
+          <li class="card point">
+            <span class="num">04</span>
+            <h3>
+              <span class="i18n-ru">Качество данных. Цепочки корректировок, корректировочные счета-фактуры, расчёты в условных единицах, автоматическая проверка заполнения после загрузки.</span>
+              <span class="i18n-en">Data quality. Adjustment chains, corrective invoices, currency-unit settlements, automatic validation of loaded documents.</span>
+            </h3>
+          </li>
+          <li class="card point">
+            <span class="num">05</span>
+            <h3>
+              <span class="i18n-ru">Контроль. Протокол по каждому запуску — состав, документы, ошибки, предупреждения; «История пакетов».</span>
+              <span class="i18n-en">Control. A protocol for every run — content, documents, errors, warnings; plus package history.</span>
+            </h3>
+          </li>
+          <li class="card point">
+            <span class="num">06</span>
+            <h3>
+              <span class="i18n-ru">Права и роли. Отдельные роли для «Основной» и «ОРП», работа под ограниченными пользователями.</span>
+              <span class="i18n-en">Access rights. Separate roles for the main contour and retail; works for restricted users.</span>
+            </h3>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="how-title">
+        <h2 id="how-title">
+          <span class="i18n-ru">Как работает</span>
+          <span class="i18n-en">How it works</span>
+        </h2>
+
+        <ol class="steps">
+          <li>
+            <span class="i18n-ru">В базе-источнике документы за период сериализуются в пакет JSON: <code>manifest.json</code>, <code>documents.jsonl</code>, <code>references.jsonl</code>.</span>
+            <span class="i18n-en">In the source database documents for the period are serialized into a JSON package: <code>manifest.json</code>, <code>documents.jsonl</code>, <code>references.jsonl</code>.</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Пакет записывается в каталог обмена — локальную папку или сетевой ресурс, доступный серверу 1С.</span>
+            <span class="i18n-en">The package is written into the exchange folder — a local path or a network share available to the 1C server.</span>
+          </li>
+          <li>
+            <span class="i18n-ru">В БП новые пакеты обнаруживаются и загружаются: создаются справочники (при необходимости) и документы, связи запоминаются.</span>
+            <span class="i18n-en">In the target database new packages are detected and loaded: reference items (when needed) and documents are created, mappings are stored.</span>
+          </li>
+          <li>
+            <span class="i18n-ru">Документы готовы к проверке и проведению; протокол показывает результат.</span>
+            <span class="i18n-en">Documents are ready for review and posting; the protocol shows the result.</span>
+          </li>
+        </ol>
+
+        <div class="flow">
+          <div class="flow-node">
+            <h3>
+              <span class="i18n-ru">УТ / КА / ЕРП</span>
+              <span class="i18n-en">UT / KA / ERP</span>
+            </h3>
+            <p class="sub">
+              <span class="i18n-ru">источник · 11.5 / 2.5</span>
+              <span class="i18n-en">source · 11.5 / 2.5</span>
+            </p>
+            <ul>
+              <li><span class="i18n-ru">расширение источника</span><span class="i18n-en">source extension</span></li>
+              <li><span class="i18n-ru">«Выгрузка», регламент</span><span class="i18n-en">“Export”, schedules</span></li>
+              <li><span class="i18n-ru">история пакетов</span><span class="i18n-en">package history</span></li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node">
+            <h3>
+              <span class="i18n-ru">Каталог обмена</span>
+              <span class="i18n-en">Exchange folder</span>
+            </h3>
+            <p class="sub">
+              <span class="i18n-ru">пакет на каждый обмен</span>
+              <span class="i18n-en">one package per exchange</span>
+            </p>
+            <ul>
+              <li>manifest.json</li>
+              <li>documents.jsonl</li>
+              <li>references.jsonl</li>
+            </ul>
+          </div>
+
+          <div class="flow-arrow" aria-hidden="true">→</div>
+
+          <div class="flow-node">
+            <h3>
+              <span class="i18n-ru">БП 3.0</span>
+              <span class="i18n-en">BP 3.0</span>
+            </h3>
+            <p class="sub">
+              <span class="i18n-ru">приёмник · 3.0</span>
+              <span class="i18n-en">target · 3.0</span>
+            </p>
+            <ul>
+              <li><span class="i18n-ru">обработка «Загрузка»</span><span class="i18n-en">“Import” tool</span></li>
+              <li><span class="i18n-ru">документы и справочники</span><span class="i18n-en">documents and reference items</span></li>
+              <li><span class="i18n-ru">сопоставление без дублей</span><span class="i18n-en">matching without duplicates</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="hint" style="margin-top:12px">
+          <span class="i18n-ru">Каталог — локальная папка или сетевая, доступная учётной записи службы сервера 1С. Прямое соединение между базами не требуется.</span>
+          <span class="i18n-en">The folder is local or a network share available to the 1C server service account. No direct database connection is required.</span>
+        </p>
+      </section>
+
+      <section aria-labelledby="shots-title">
+        <h2 id="shots-title">
+          <span class="i18n-ru">Скриншоты</span>
+          <span class="i18n-en">Screenshots</span>
+        </h2>
+
+        <div class="gallery">
+          <figure>
+            <a href="assets/product/ut-settings.png" target="_blank" rel="noopener">
+              <img src="assets/product/ut-settings.png" alt="Настройки выгрузки JSON в базе-источнике (УТ)" loading="lazy" width="646" height="908">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">Выгрузка JSON в источнике: вариант настроек, период, типы документов</span>
+              <span class="i18n-en">JSON export in the source: settings profile, period, document types</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/product/ut-progress.png" target="_blank" rel="noopener">
+              <img src="assets/product/ut-progress.png" alt="Фоновое выполнение выгрузки с индикатором прогресса" loading="lazy" width="850" height="520">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">Фоновое выполнение с индикатором прогресса и числом документов в пакете</span>
+              <span class="i18n-en">Background run with progress indicator and package document count</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/product/bp-settings.png" target="_blank" rel="noopener">
+              <img src="assets/product/bp-settings.png" alt="Обработка загрузки JSON в БП" loading="lazy" width="766" height="686">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">Загрузка JSON в БП: каталог, ключ пакета, параметры потоков</span>
+              <span class="i18n-en">JSON import in the target: folder, package key, threading options</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/product/bp-protocol.png" target="_blank" rel="noopener">
+              <img src="assets/product/bp-protocol.png" alt="Протокол загрузки пакета" loading="lazy" width="730" height="770">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">Протокол загрузки: состав пакета, документы, ошибки и предупреждения</span>
+              <span class="i18n-en">Import protocol: package content, documents, errors and warnings</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/product/ut-protocol.png" target="_blank" rel="noopener">
+              <img src="assets/product/ut-protocol.png" alt="Протокол выгрузки пакета" loading="lazy" width="650" height="350">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">Протокол выгрузки в источнике</span>
+              <span class="i18n-en">Export protocol in the source</span>
+            </figcaption>
+          </figure>
+
+          <figure>
+            <a href="assets/product/bp-history.png" target="_blank" rel="noopener">
+              <img src="assets/product/bp-history.png" alt="История пакетов обмена" loading="lazy" width="2526" height="1163">
+            </a>
+            <figcaption>
+              <span class="i18n-ru">«История пакетов»: что, когда и с каким результатом загружалось</span>
+              <span class="i18n-en">Package history: what was loaded, when and with which result</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ВИДЕО -->
+      <section aria-labelledby="video-title">
+        <h2 id="video-title">
+          <span class="i18n-ru">Видео-демо</span>
+          <span class="i18n-en">Video demo</span>
+        </h2>
+
+        <div class="videos">
+          <a class="card video" href="https://youtu.be/PQdphnDBTsk" target="_blank" rel="noopener">
+            <span class="play" aria-hidden="true">▶</span>
+            <span class="video-text">
+              <span class="video-name">YouTube</span>
+              <span class="video-sub">
+                <span class="i18n-ru">Обмен JSON — демонстрация работы</span>
+                <span class="i18n-en">JSON Exchange — walkthrough</span>
+              </span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+
+          <a class="card video" href="https://rutube.ru/video/6ba603a06744ea2517671c64031672e8/" target="_blank" rel="noopener">
+            <span class="play" aria-hidden="true">▶</span>
+            <span class="video-text">
+              <span class="video-name">RuTube</span>
+              <span class="video-sub">
+                <span class="i18n-ru">Обмен JSON — демонстрация работы</span>
+                <span class="i18n-en">JSON Exchange — walkthrough</span>
+              </span>
+            </span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section aria-labelledby="specs-title">
+        <h2 id="specs-title">
+          <span class="i18n-ru">Требования, состав, ограничения</span>
+          <span class="i18n-en">Requirements, deliverables, limitations</span>
+        </h2>
+
+        <div class="specs">
+          <div class="card spec">
+            <h3>
+              <span class="i18n-ru">Требования</span>
+              <span class="i18n-en">Requirements</span>
+            </h3>
+            <ul>
+              <li>
+                <span class="i18n-ru">1С:Предприятие 8.3.27+ (серверная или файловая база)</span>
+                <span class="i18n-en">1C:Enterprise 8.3.27+ (server or file infobase)</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Источник: УТ 11.5, КА 2.5 или ЕРП 2.5 (проверено на 11.5.27.101 / 2.5.27.101); УТ 11.6 — в плане</span>
+                <span class="i18n-en">Source: UT 11.5, KA 2.5 or ERP 2.5 (verified on 11.5.27.101 / 2.5.27.101); UT 11.6 is planned</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Приёмник: БП 3.0 (проверено на 3.0.209.16)</span>
+                <span class="i18n-en">Target: BP 3.0 (verified on 3.0.209.16)</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Каталог обмена, доступный серверу 1С</span>
+                <span class="i18n-en">Exchange folder accessible to the 1C server</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card spec">
+            <h3>
+              <span class="i18n-ru">Состав поставки</span>
+              <span class="i18n-en">What you get</span>
+            </h3>
+            <ul>
+              <li>
+                <span class="i18n-ru">Расширение-источник (<code>.cfe</code>) для УТ, КА или ЕРП</span>
+                <span class="i18n-en">Source extension (<code>.cfe</code>) for UT, KA or ERP</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Расширение для БП 3.0 (<code>.cfe</code>)</span>
+                <span class="i18n-en">Extension for BP 3.0 (<code>.cfe</code>)</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Руководство по установке и настройке, описание решения, FAQ</span>
+                <span class="i18n-en">Installation and setup guide, solution overview, FAQ</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card spec">
+            <h3>
+              <span class="i18n-ru">Ограничения</span>
+              <span class="i18n-en">Limitations</span>
+            </h3>
+            <ul>
+              <li>
+                <span class="i18n-ru">Документы создаются без проведения — проведение выполняет пользователь</span>
+                <span class="i18n-en">Documents are created unposted — the user posts them</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Направление обмена: источник (УТ/КА/ЕРП) → БП; обратный поток не входит в поставку</span>
+                <span class="i18n-en">Direction: source (UT/KA/ERP) → BP; the reverse flow is not included</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Обмен файловый, через каталог — это осознанное решение: работает в закрытых контурах и на разных серверах</span>
+                <span class="i18n-en">File-based exchange through a folder by design: works in closed environments and across servers</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card spec">
+            <h3>
+              <span class="i18n-ru">Лицензирование</span>
+              <span class="i18n-en">Licensing</span>
+            </h3>
+            <ul>
+              <li>
+                <span class="i18n-ru">Подписка на 3, 6 или 12 месяцев на пару «база-источник + БП»; ключ оформляется на организацию (ИНН)</span>
+                <span class="i18n-en">Subscription for 3, 6 or 12 months per “source + BP” pair; the key is issued for a company (tax ID)</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Дополнительные базы БП (партнёры, филиалы) — отдельные подписки; для сетей — тариф «Сеть»</span>
+                <span class="i18n-en">Extra BP databases (partners, branches) — separate subscriptions; “Network” plan for groups</span>
+              </li>
+              <li>
+                <span class="i18n-ru">В подписку входят обновления под новые релизы типовых конфигураций и поддержка совместимости</span>
+                <span class="i18n-en">The subscription includes updates for new standard configuration releases and compatibility support</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Демо 7 дней с первого запуска: период выгрузки до 14 дней, до 25 документов в пакете</span>
+                <span class="i18n-en">7-day demo from the first run: export period up to 14 days, up to 25 documents per package</span>
+              </li>
+              <li>
+                <span class="i18n-ru">Техподдержка: первый месяц бесплатно, далее по часам</span>
+                <span class="i18n-en">Support: first month free, then billed hourly</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="cta-title">
+        <div class="card cta-card">
+          <h2 id="cta-title">
+            <span class="i18n-ru">Подобрать состав и узнать условия</span>
+            <span class="i18n-en">Get a quote and the terms</span>
+          </h2>
+          <p>
+            <span class="i18n-ru">Напишите, какие конфигурации и релизы используются, сколько баз БП и какой объём документов в месяц — вернусь с составом поставки, ценой и планом внедрения. Демо-режим включается без ключа.</span>
+            <span class="i18n-en">Tell me which configurations and releases you run, how many BP databases and the monthly document volume — I will come back with the deliverables, price and rollout plan. The demo works without a key.</span>
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="mailto:m_aster@bk.ru?subject=%D0%9E%D0%B1%D0%BC%D0%B5%D0%BD%20JSON%3A%20%D0%B4%D0%B5%D0%BC%D0%BE">
+              <span class="i18n-ru">Написать на e-mail</span>
+              <span class="i18n-en">Write an e-mail</span>
+            </a>
+            <a class="btn" href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>
+            <a class="btn" href="index.html">
+              <span class="i18n-ru">Другие услуги</span>
+              <span class="i18n-en">Other services</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year">2026</span>
+        <span class="i18n-ru">Олег Москвичев</span>
+        <span class="i18n-en">Oleg Moskvichev</span>
+      </span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>
+        <span class="i18n-ru">Сделано на GitHub Pages</span>
+        <span class="i18n-en">Built on GitHub Pages</span>
+      </span>
+    </footer>
+  </div>
+
+  <script src="assets/main.js" defer></script>
+</body>
+</html>

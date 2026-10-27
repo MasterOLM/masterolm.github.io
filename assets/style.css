@@ -201,6 +201,8 @@ h2 {
 
 .product p { margin: 0; color: var(--muted); font-size: 15px; }
 
+.product .more { margin: 8px 0 0; color: #9ec1ff; font-size: 13.5px; }
+
 .product .arrow {
   margin-left: auto;
   color: var(--accent);
