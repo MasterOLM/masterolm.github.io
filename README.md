@@ -4,12 +4,23 @@
 
 ## Публикация
 
-Опубликованный адрес: <https://masterolm.github.io/>
+Опубликованный адрес: <https://obmenjson.ru/> (технический: <https://masterolm.github.io/>)
+
+## Свой домен — где что лежит
+
+- Домен `obmenjson.ru`, DNS у reg.ru (NS `ns1.reg.ru` / `ns2.reg.ru`):
+  - апекс `@`: `A` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`;
+  - `www`: `CNAME` → `masterolm.github.io`.
+- В репозитории: файл [`CNAME`](./CNAME) с одной строкой `obmenjson.ru` — именно он привязывает домен
+  к Pages при публикации из ветки.
+
+Симптом «сайт открывается по `masterolm.github.io`, а по домену — `Site not found` (и сертификат `*.github.io`)»
+означает, что домен не привязан к Pages: файла `CNAME` нет или он не в ветке `main`.
 
 Ветка `main`, корень репозитория — Pages отдаёт файлы как есть. В Settings → Pages источник должен быть
 `Deploy from a branch` → `main` → `/ (root)`. Сборка Jekyll отключена файлом `.nojekyll`.
 
-## Свой домен
+## Если привязываете новый домен с нуля
 
 1. В Settings → Pages → Custom domain вписать домен (например `example.ru`), сохранить.
 2. У регистратора/в DNS:
