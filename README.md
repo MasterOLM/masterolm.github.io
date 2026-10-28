@@ -17,6 +17,23 @@
 Симптом «сайт открывается по `masterolm.github.io`, а по домену — `Site not found` (и сертификат `*.github.io`)»
 означает, что домен не привязан к Pages: файла `CNAME` нет или он не в ветке `main`.
 
+## Старый домен `masterolm.ru` — редирект через Cloudflare
+
+`masterolm.ru` не обслуживает сайт, а только перенаправляет на `obmenjson.ru`. Реализовано в Cloudflare
+(зона `masterolm.ru`, NS `kyree.ns.cloudflare.com` / `lila.ns.cloudflare.com`, делегирование в реестре .ru):
+
+- DNS: `A @` и `A www` → `192.0.2.1` (заглушка RFC 5737), обе записи **Proxied** (оранжевая туча) —
+  без прокси Redirect Rule не срабатывает, а отданный наружу `192.0.2.1` даёт таймаут соединения;
+- Rules → Redirect Rules → `masterolm → obmenjson`: «All incoming requests»,
+  Dynamic, Expression `concat("https://obmenjson.ru", http.request.uri.path)`, код **301**,
+  Preserve query string — включён;
+- SSL/TLS: режим Full, Edge Certificates → Always Use HTTPS включён; сертификат выпускает Cloudflare
+  (Let's Encrypt, CN `masterolm.ru`).
+
+Проверка: `curl.exe -sSI https://masterolm.ru/product.html` → `HTTP/1.1 301` и `Location: https://obmenjson.ru/product.html`.
+Пока зона в статусе «Неверные серверы имен»/`Pending`, прокси не применяется — сначала нужно дождаться `Active`.
+Парковка reg.ru (`95.163.244.138`) больше не используется; MX/TXT на домене не было, почту переносить не требовалось.
+
 Ветка `main`, корень репозитория — Pages отдаёт файлы как есть. В Settings → Pages источник должен быть
 `Deploy from a branch` → `main` → `/ (root)`. Сборка Jekyll отключена файлом `.nojekyll`.
 
