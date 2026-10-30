@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /404.html
+Disallow: /tools/
+Disallow: /README.md
 
 Clean-param: lang /
 
