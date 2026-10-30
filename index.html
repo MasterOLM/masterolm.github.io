@@ -1,10 +1,12 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-title-ru="Олег Москвичев — разработка и интеграция 1С, обмен JSON" data-title-en="Oleg Moskvichev — 1C development &amp; integration, JSON exchange">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Олег Москвичев — разработка и интеграция 1С</title>
+  <title>Олег Москвичев — разработка и интеграция 1С, обмен JSON</title>
   <meta name="description" content="Разработка и интеграция 1С: расширения и доработки (УТ, БП, КА, ЕРП), обмены JSON/HTTP, автоматизация учёта.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://obmenjson.ru/">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0b0f14">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -20,6 +22,71 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://obmenjson.ru/assets/og.png">
+
+  <!-- Верификация в поисковиках: раскомментируйте и вставьте свои коды
+       (Яндекс.Вебмастер → Настройки → Проверка прав; Google Search Console → HTML-тег) -->
+  <!-- <meta name="yandex-verification" content="КОД_ИЗ_ЯНДЕКС_ВЕБМАСТЕРА"> -->
+  <!-- <meta name="google-site-verification" content="КОД_ИЗ_SEARCH_CONSOLE"> -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://obmenjson.ru/#person",
+        "name": "Олег Москвичев",
+        "alternateName": "Oleg Moskvichev",
+        "jobTitle": "Разработчик 1С",
+        "email": "mailto:m_aster@bk.ru",
+        "url": "https://obmenjson.ru/",
+        "image": "https://obmenjson.ru/assets/og.png",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Москва",
+          "addressCountry": "RU"
+        },
+        "sameAs": [
+          "https://github.com/MasterOLM",
+          "https://t.me/Master_OL"
+        ],
+        "knowsAbout": [
+          "1С:Предприятие",
+          "Расширения 1С",
+          "Интеграция 1С",
+          "Обмен данными JSON",
+          "HTTP-сервисы 1С",
+          "Автоматизация учёта"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://obmenjson.ru/#service",
+        "name": "Обмен JSON — разработка и интеграция 1С",
+        "url": "https://obmenjson.ru/",
+        "image": "https://obmenjson.ru/assets/og.png",
+        "description": "Разработка и интеграция 1С: расширения и доработки (УТ, БП, КА, ЕРП), обмены JSON/HTTP, автоматизация учёта.",
+        "founder": { "@id": "https://obmenjson.ru/#person" },
+        "email": "mailto:m_aster@bk.ru",
+        "areaServed": { "@type": "Country", "name": "Россия" },
+        "priceRange": "от 20 000 ₽",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Москва",
+          "addressCountry": "RU"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://obmenjson.ru/#website",
+        "url": "https://obmenjson.ru/",
+        "name": "Обмен JSON",
+        "inLanguage": "ru-RU",
+        "publisher": { "@id": "https://obmenjson.ru/#person" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
@@ -164,5 +231,6 @@
   </div>
 
   <script src="assets/main.js" defer></script>
+  <script src="assets/analytics.js" defer></script>
 </body>
 </html>

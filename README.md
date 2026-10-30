@@ -56,6 +56,7 @@
 - `404.html` — страница «не найдено»
 - `assets/style.css` — общая тема; `assets/product.css` — продукт; `assets/legal.css` — юридические страницы и «Как купить»
 - `assets/main.js` — переключатель RU/EN (язык в `localStorage`, принудительно — `?lang=en`)
+- `assets/analytics.js` — Яндекс.Метрика и цели (см. раздел «SEO и аналитика»)
 - `assets/product/*.png` — скриншоты для страницы продукта
 - `favicon.svg`, `.nojekyll`, `.gitattributes`
 
@@ -78,3 +79,23 @@
 
 Просто открыть `index.html` в браузере. Для проверки как на Pages (нужны корректные 404 и «чистые» URL) — любой статический
 сервер; в VS Code удобно расширением **Live Preview** (ПКМ по `index.html` → *Show Preview*). Python/Node в системе не установлены.
+
+## SEO и аналитика
+
+- **Канонические адреса.** Pages отдаёт и `/product`, и `/product.html` — это дубли. На каждой странице есть
+  `<link rel="canonical">` на адрес с `.html` (главная — на `/`); новые страницы оформлять так же.
+- **Микроразметка.** JSON-LD в `<head>`: главная — `Person`, `ProfessionalService`, `WebSite`;
+  `product.html` — `SoftwareApplication` с `offers` (цены) и `BreadcrumbList`; `purchase.html` — `HowTo` и `BreadcrumbList`.
+  При смене цен править `offers` в `product.html`, иначе разметка разойдётся с прайсом.
+- **Яндекс.Метрика.** Номер счётчика — переменная `YM_ID` в начале `assets/analytics.js` (сейчас `0` — код не загружается).
+  Цели-события: `email_click` (клик по `mailto:`), `telegram_click`, `purchase_open`, `video_open`.
+  В интерфейсе Метрики их надо создать как цели типа «JavaScript-событие» с такими же идентификаторами.
+- **Вебмастеры.** В `index.html` есть закомментированные `yandex-verification` и `google-site-verification` — вставить коды
+  из Яндекс.Вебмастера и Search Console, раскомментировать. После публикации отправить `https://obmenjson.ru/sitemap.xml`
+  в оба вебмастера и запросить переобход страниц.
+- **`robots.txt`.** `Clean-param: lang /` — чтобы `?lang=en` не считался отдельной страницей (директива Яндекса).
+  Адреса вида `/product` дублями не закрываем: canonical уже указывает на `.html`-вариант.
+- **`sitemap.xml`.** При правке содержимого страницы обновлять её `<lastmod>`.
+- **Скриншоты.** Тяжёлые PNG пересжаты в палитровые PNG-8 (754 → 345 КБ суммарно) без изменения размеров, поэтому
+  атрибуты `width`/`height` в `product.html` остались прежними. Новые скриншоты стоит прогонять так же;
+  исходники до сжатия — в истории git (коммит со сжатием).
