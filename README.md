@@ -87,7 +87,8 @@
 - **Микроразметка.** JSON-LD в `<head>`: главная — `Person`, `ProfessionalService`, `WebSite`;
   `product.html` — `SoftwareApplication` с `offers` (цены) и `BreadcrumbList`; `purchase.html` — `HowTo` и `BreadcrumbList`.
   При смене цен править `offers` в `product.html`, иначе разметка разойдётся с прайсом.
-- **Яндекс.Метрика.** Номер счётчика — переменная `YM_ID` в начале `assets/analytics.js` (сейчас `0` — код не загружается).
+- **Яндекс.Метрика.** Номер счётчика — переменная `YM_ID` в начале `assets/analytics.js` (сейчас `113935350`).
+  Подключение одно на все страницы, поэтому `<noscript>`-пиксель из стандартного кода не используется.
   Цели-события: `email_click` (клик по `mailto:`), `telegram_click`, `purchase_open`, `video_open`.
   В интерфейсе Метрики их надо создать как цели типа «JavaScript-событие» с такими же идентификаторами.
 - **Вебмастеры.** В `index.html` есть закомментированные `yandex-verification` и `google-site-verification` — вставить коды

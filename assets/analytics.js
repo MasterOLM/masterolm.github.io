@@ -1,5 +1,5 @@
 (function () {
-  var YM_ID = 0; // ← номер счётчика Яндекс.Метрики (например 12345678). Пока 0 — код не загружается.
+  var YM_ID = 113935350; // счётчик Яндекс.Метрики для obmenjson.ru
   if (!YM_ID) return;
 
   (function (m, e, t, r, i, k, a) {
@@ -14,7 +14,8 @@
     clickmap: true,
     trackLinks: true,
     accurateTrackBounce: true,
-    webvisor: true
+    webvisor: true,
+    ecommerce: 'dataLayer'
   });
 
   function goal(name) {
