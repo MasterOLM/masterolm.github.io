@@ -226,6 +226,14 @@ h2 {
 
 .note a:hover { border-bottom-color: rgba(158, 193, 255, 0.8); }
 
+.spec ul a {
+  color: #9ec1ff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 193, 255, 0.35);
+}
+
+.spec ul a:hover { border-bottom-color: rgba(158, 193, 255, 0.8); }
+
 .contacts {
   list-style: none;
   margin: 0;

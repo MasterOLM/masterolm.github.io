@@ -1,0 +1,114 @@
+/* Стили страниц документации (FAQ, руководство) — дополняют assets/style.css и assets/legal.css */
+
+.doc-page .page { padding: 34px 34px 38px; }
+
+.doc-page .doc h2 {
+  margin: 34px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 20px;
+  line-height: 1.35;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.doc-page .doc h3 {
+  margin: 24px 0 8px;
+  font-size: 16.5px;
+  line-height: 1.45;
+  color: #dbe7ff;
+}
+
+.doc-page .doc h2[id],
+.doc-page .doc h3[id] { scroll-margin-top: 20px; }
+
+.doc-page .lead {
+  margin: 0 0 18px;
+  color: #c7d3e3;
+  font-size: 15.5px;
+}
+
+.toc {
+  margin: 0 0 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.toc p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.toc ol { margin: 0; padding-left: 20px; }
+
+.toc li { color: #c7d3e3; font-size: 14.5px; line-height: 1.6; }
+
+.toc a {
+  color: #9ec1ff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158, 193, 255, 0.3);
+}
+
+.toc a:hover { border-bottom-color: rgba(158, 193, 255, 0.8); }
+
+.doc .table-wrap {
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.doc thead th {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.doc tbody td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+  color: #c7d3e3;
+  vertical-align: top;
+}
+
+.doc tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+.callout {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.08);
+  color: #c7d3e3;
+  font-size: 14.5px;
+}
+
+.callout strong { color: var(--text); }
+
+.cta-line {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 15px;
+}
+
+@media (max-width: 640px) {
+  .doc-page .page { padding: 22px 18px; }
+}
