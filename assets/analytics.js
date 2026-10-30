@@ -18,8 +18,22 @@
     ecommerce: 'dataLayer'
   });
 
+  var GA_ID = 'G-7CZCH0RRQ7'; // Google Analytics 4 для obmenjson.ru
+  if (GA_ID) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID);
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(ga);
+  }
+
+  // Одно и то же событие уходит в Метрику (цель) и в GA4.
   function goal(name) {
     try { window.ym(YM_ID, 'reachGoal', name); } catch (e) { /* счётчик не загрузился */ }
+    try { if (window.gtag) window.gtag('event', name); } catch (e) { /* GA не загрузился */ }
   }
 
   // Цели: обращение по e-mail/Telegram, переход к покупке, просмотр видео.
