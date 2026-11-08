@@ -36,6 +36,8 @@
     try { if (window.gtag) window.gtag('event', name); } catch (e) { /* GA не загрузился */ }
   }
 
+  window.siteGoal = goal;
+
   // Цели: обращение по e-mail/Telegram, переход к покупке, просмотр видео.
   document.addEventListener('click', function (event) {
     var link = event.target.closest ? event.target.closest('a[href]') : null;

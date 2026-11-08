@@ -14,6 +14,10 @@
     ru: { dark: 'Включить светлую тему', light: 'Включить тёмную тему' },
     en: { dark: 'Switch to light theme', light: 'Switch to dark theme' }
   };
+  var feedbackLabels = {
+    ru: { dialog: 'Заявка', close: 'Закрыть', open: 'Оставить заявку' },
+    en: { dialog: 'Request', close: 'Close', open: 'Request a quote' }
+  };
 
   function currentTheme() {
     return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
@@ -43,6 +47,7 @@
     });
     if (themeBtn) applyTheme(currentTheme());
     updateLightboxLabels();
+    updateFeedbackLabels();
   }
 
   function detect() {
@@ -162,6 +167,91 @@
     } else if (e.key === 'Tab') {
       e.preventDefault();
       lightboxClose.focus();
+    }
+  });
+
+  /* Форма заявки: плавающая кнопка + модалка с формой Яндекс Форм.
+     URL формы задаётся здесь или атрибутом data-feedback-form на <html>. */
+  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || '';
+  var feedbackBtn = null;
+  var feedbackDialog = null;
+  var feedbackFrame = null;
+  var feedbackClose = null;
+
+  function buildFeedback() {
+    feedbackBtn = document.createElement('button');
+    feedbackBtn.type = 'button';
+    feedbackBtn.className = 'feedback-btn';
+    feedbackBtn.setAttribute('aria-haspopup', 'dialog');
+    feedbackBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9.5L5 21v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>' +
+      '<span><span class="i18n-ru">Оставить заявку</span><span class="i18n-en">Request a quote</span></span>';
+
+    feedbackDialog = document.createElement('div');
+    feedbackDialog.className = 'feedback';
+    feedbackDialog.hidden = true;
+    feedbackDialog.setAttribute('role', 'dialog');
+    feedbackDialog.setAttribute('aria-modal', 'true');
+    feedbackDialog.setAttribute('aria-labelledby', 'feedback-title');
+    feedbackDialog.innerHTML =
+      '<div class="feedback-panel">' +
+      '<button type="button" class="feedback-close"></button>' +
+      '<h2 class="feedback-title" id="feedback-title"><span class="i18n-ru">Оставить заявку</span><span class="i18n-en">Send a request</span></h2>' +
+      '<p class="feedback-hint"><span class="i18n-ru">Отвечу в течение рабочего дня.</span><span class="i18n-en">I reply within one business day.</span></p>' +
+      (FEEDBACK_FORM
+        ? '<div class="feedback-frame"><iframe title="Форма заявки" loading="lazy"></iframe></div>' +
+          '<p class="feedback-fallback"><span class="i18n-ru">Не открывается? Напишите на <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> или в <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>.</span><span class="i18n-en">Form not working? Email <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> or use <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>.</span></p>'
+        : '<p class="feedback-note"><span class="i18n-ru">Напишите на <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> или в <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a> — этого достаточно, чтобы обсудить задачу.</span><span class="i18n-en">Email <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> or message me on <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a> — that is enough to discuss your task.</span></p>') +
+      '</div>';
+
+    feedbackFrame = feedbackDialog.querySelector('iframe');
+    feedbackClose = feedbackDialog.querySelector('.feedback-close');
+
+    feedbackClose.addEventListener('click', closeFeedback);
+    feedbackDialog.addEventListener('click', function (e) {
+      if (e.target === feedbackDialog) closeFeedback();
+    });
+    feedbackBtn.addEventListener('click', openFeedback);
+
+    document.body.appendChild(feedbackBtn);
+    document.body.appendChild(feedbackDialog);
+  }
+
+  function updateFeedbackLabels() {
+    if (!feedbackDialog) return;
+    var dict = feedbackLabels[root.lang] || feedbackLabels.ru;
+    feedbackDialog.setAttribute('aria-label', dict.dialog);
+    feedbackClose.setAttribute('aria-label', dict.close);
+    feedbackClose.setAttribute('title', dict.close);
+    feedbackBtn.setAttribute('aria-label', dict.open);
+    feedbackBtn.setAttribute('title', dict.open);
+  }
+
+  function openFeedback() {
+    if (!feedbackDialog) buildFeedback();
+    if (feedbackFrame && !feedbackFrame.getAttribute('src')) feedbackFrame.src = FEEDBACK_FORM;
+    updateFeedbackLabels();
+    feedbackDialog.hidden = false;
+    document.body.classList.add('feedback-open');
+    feedbackClose.focus();
+    if (window.siteGoal) window.siteGoal('feedback_open');
+  }
+
+  function closeFeedback() {
+    if (!feedbackDialog || feedbackDialog.hidden) return;
+    feedbackDialog.hidden = true;
+    document.body.classList.remove('feedback-open');
+    feedbackBtn.focus();
+  }
+
+  buildFeedback();
+  updateFeedbackLabels();
+
+  document.addEventListener('keydown', function (e) {
+    if (!feedbackDialog || feedbackDialog.hidden) return;
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      e.preventDefault();
+      closeFeedback();
     }
   });
 
