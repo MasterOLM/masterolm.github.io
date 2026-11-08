@@ -1051,17 +1051,10 @@ html[lang="en"] .i18n-ru { display: none; }
 
   .home .role { font-size: 14px; line-height: 1.45; margin-bottom: 0; }
 
-  .board {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: 12px;
-    align-items: start;
-  }
-
-  .board-col {
+  .home .board {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 
   .home section { margin-bottom: 0; }
@@ -1079,37 +1072,35 @@ html[lang="en"] .i18n-ru { display: none; }
   .home .stat-label { margin-top: 4px; font-size: 11px; line-height: 1.25; hyphens: auto; overflow-wrap: break-word; }
 
   .home .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 8px;
   }
 
-  .home .point { padding: 9px 12px; }
+  .home .point { padding: 10px 12px; }
 
   .home .point .num { display: inline; margin: 0 6px 0 0; font-size: 10.5px; }
 
-  .home .point h3 { display: inline; font-size: 13px; line-height: 1.3; }
+  .home .point h3 { display: inline; font-size: 12.5px; line-height: 1.35; }
 
-  .home .product { padding: 12px 14px; gap: 12px; }
+  .home .product { padding: 14px 16px; gap: 14px; }
 
-  .home .product h3 { font-size: 16px; margin-bottom: 4px; }
+  .home .product h3 { font-size: 17px; margin-bottom: 4px; }
 
-  .home .product p { font-size: 12.5px; line-height: 1.45; }
+  .home .product p { font-size: 13px; line-height: 1.45; }
 
-  .home .product .more { font-size: 11.5px; margin-top: 5px; }
+  .home .product .more { font-size: 12px; margin-top: 5px; }
 
   .home .product .arrow { font-size: 18px; }
 
   .home .note { font-size: 11.5px; margin: 6px 0 0; }
 
-  .home .contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 0; }
+  .home .contacts { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 0; }
 
-  .home .contacts li:last-child { grid-column: 1 / -1; }
-
-  .home .contact { padding: 6px 10px; gap: 1px; }
+  .home .contact { padding: 7px 10px; gap: 1px; }
 
   .home .contact .label { font-size: 10px; }
 
   .home .contact .value { font-size: 11.5px; line-height: 1.3; }
 
-  .home footer { margin-top: 12px; font-size: 11px; }
+  .home footer { margin-top: 10px; font-size: 11px; }
 }
