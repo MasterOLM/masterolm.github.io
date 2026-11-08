@@ -444,7 +444,44 @@ h1 {
 
 .lightbox-close:hover { color: var(--accent); border-color: var(--accent-line); }
 
-.gallery a { cursor: zoom-in; }
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.lightbox-nav[hidden] { display: none; }
+
+.lightbox-nav.prev { left: 18px; }
+.lightbox-nav.next { right: 18px; }
+
+.lightbox-nav::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+}
+
+.lightbox-nav.prev::before { transform: translate(-35%, -50%) rotate(-135deg); }
+.lightbox-nav.next::before { transform: translate(-65%, -50%) rotate(45deg); }
+
+.lightbox-nav:hover { color: var(--accent); border-color: var(--accent-line); }
+
+.gallery a,
+.shots a { cursor: zoom-in; }
 
 .hero-body {
   display: grid;

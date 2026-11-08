@@ -51,8 +51,11 @@
         "description": "Два расширения 1С для ежедневного автоматического переноса документов из УТ 11.5, КА 2.5 и ЕРП 2.5 в Бухгалтерию предприятия 3.0 по JSON: реализации, поступления, счета-фактуры, корректировки, розничные продажи.",
         "image": [
           "https://obmenjson.ru/assets/product/ut-settings.png",
+          "https://obmenjson.ru/assets/product/ka-settings.png",
+          "https://obmenjson.ru/assets/product/erp-settings.png",
           "https://obmenjson.ru/assets/product/bp-settings.png",
-          "https://obmenjson.ru/assets/product/bp-protocol.png"
+          "https://obmenjson.ru/assets/product/ut-progress.png",
+          "https://obmenjson.ru/assets/product/bp-progress.png"
         ],
         "inLanguage": "ru-RU",
         "featureList": [
@@ -195,6 +198,10 @@
         <a class="btn" href="#video">
           <span class="i18n-ru">Видео-демо</span>
           <span class="i18n-en">Video demo</span>
+        </a>
+        <a class="btn" href="#shots">
+          <span class="i18n-ru">Скриншоты</span>
+          <span class="i18n-en">Screenshots</span>
         </a>
       </div>
     </header>
@@ -372,73 +379,104 @@
         </p>
       </section>
 
-      <section aria-labelledby="shots-title">
+      <section id="shots" aria-labelledby="shots-title">
         <h2 class="sr-only" id="shots-title">
           <span class="i18n-ru">Скриншоты</span>
           <span class="i18n-en">Screenshots</span>
         </h2>
 
-        <div class="gallery">
-          <figure>
-            <a href="assets/product/ut-settings.png" target="_blank" rel="noopener">
-              <img src="assets/product/ut-settings.png" alt="Настройки выгрузки JSON в базе-источнике (УТ)" loading="lazy" width="646" height="908">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">Выгрузка JSON в источнике: вариант настроек, период, типы документов</span>
-              <span class="i18n-en">JSON export in the source: settings profile, period, document types</span>
-            </figcaption>
-          </figure>
+        <div class="shots" data-shots tabindex="0" role="group" aria-label="Скриншоты программы «Обмен JSON»">
+          <ul class="shots-track">
+            <li class="shots-item is-active">
+              <figure>
+                <a href="assets/product/ut-settings.png" target="_blank" rel="noopener">
+                  <img src="assets/product/ut-settings.png" alt="Выгрузка JSON в УТ: настройки, период и типы документов" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Выгрузка JSON в источнике (УТ 11.5): вариант настроек, период, типы документов</span>
+                  <span class="i18n-en">JSON export in the source (UT 11.5): settings profile, period, document types</span>
+                </figcaption>
+              </figure>
+            </li>
 
-          <figure>
-            <a href="assets/product/ut-progress.png" target="_blank" rel="noopener">
-              <img src="assets/product/ut-progress.png" alt="Фоновое выполнение выгрузки с индикатором прогресса" loading="lazy" width="850" height="520">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">Фоновое выполнение с индикатором прогресса и числом документов в пакете</span>
-              <span class="i18n-en">Background run with progress indicator and package document count</span>
-            </figcaption>
-          </figure>
+            <li class="shots-item">
+              <figure>
+                <a href="assets/product/ka-settings.png" target="_blank" rel="noopener">
+                  <img src="assets/product/ka-settings.png" alt="Выгрузка JSON в КА: настройки, период и типы документов" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Та же обработка выгрузки в КА 2.5: единый интерфейс для всех конфигураций-источников</span>
+                  <span class="i18n-en">The same export tool in KA 2.5: one interface for every source configuration</span>
+                </figcaption>
+              </figure>
+            </li>
 
-          <figure>
-            <a href="assets/product/bp-settings.png" target="_blank" rel="noopener">
-              <img src="assets/product/bp-settings.png" alt="Обработка загрузки JSON в БП" loading="lazy" width="766" height="686">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">Загрузка JSON в БП: каталог, ключ пакета, параметры потоков</span>
-              <span class="i18n-en">JSON import in the target: folder, package key, threading options</span>
-            </figcaption>
-          </figure>
+            <li class="shots-item">
+              <figure>
+                <a href="assets/product/erp-settings.png" target="_blank" rel="noopener">
+                  <img src="assets/product/erp-settings.png" alt="Выгрузка JSON в ЕРП: настройки, период и типы документов" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Обработка выгрузки в ЕРП 2.5: тот же набор настроек и параметров</span>
+                  <span class="i18n-en">The export tool in ERP 2.5: the same settings and options</span>
+                </figcaption>
+              </figure>
+            </li>
 
-          <figure>
-            <a href="assets/product/bp-protocol.png" target="_blank" rel="noopener">
-              <img src="assets/product/bp-protocol.png" alt="Протокол загрузки пакета" loading="lazy" width="730" height="770">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">Протокол загрузки: состав пакета, документы, ошибки и предупреждения</span>
-              <span class="i18n-en">Import protocol: package content, documents, errors and warnings</span>
-            </figcaption>
-          </figure>
+            <li class="shots-item">
+              <figure>
+                <a href="assets/product/ut-progress.png" target="_blank" rel="noopener">
+                  <img src="assets/product/ut-progress.png" alt="Фоновое выполнение выгрузки с индикатором прогресса" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Фоновое выполнение выгрузки: индикатор прогресса и число документов в пакете</span>
+                  <span class="i18n-en">Background export: progress indicator and the number of documents in the package</span>
+                </figcaption>
+              </figure>
+            </li>
 
-          <figure>
-            <a href="assets/product/ut-protocol.png" target="_blank" rel="noopener">
-              <img src="assets/product/ut-protocol.png" alt="Протокол выгрузки пакета" loading="lazy" width="650" height="350">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">Протокол выгрузки в источнике</span>
-              <span class="i18n-en">Export protocol in the source</span>
-            </figcaption>
-          </figure>
+            <li class="shots-item">
+              <figure>
+                <a href="assets/product/bp-settings.png" target="_blank" rel="noopener">
+                  <img src="assets/product/bp-settings.png" alt="Загрузка JSON в БП: каталог и ключ пакета, параметры потоков" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Загрузка JSON в БП: каталог пакета, ключ пакета, параметры потоков</span>
+                  <span class="i18n-en">JSON import in BP: package folder, package key, threading options</span>
+                </figcaption>
+              </figure>
+            </li>
 
-          <figure>
-            <a href="assets/product/bp-history.png" target="_blank" rel="noopener">
-              <img src="assets/product/bp-history.png" alt="История пакетов обмена" loading="lazy" width="2526" height="1163">
-            </a>
-            <figcaption>
-              <span class="i18n-ru">«История пакетов»: что, когда и с каким результатом загружалось</span>
-              <span class="i18n-en">Package history: what was loaded, when and with which result</span>
-            </figcaption>
-          </figure>
+            <li class="shots-item">
+              <figure>
+                <a href="assets/product/bp-progress.png" target="_blank" rel="noopener">
+                  <img src="assets/product/bp-progress.png" alt="Фоновое выполнение загрузки в БП с индикатором прогресса" width="1200" height="800" loading="lazy" decoding="async">
+                </a>
+                <figcaption>
+                  <span class="i18n-ru">Фоновое выполнение загрузки в БП: прогресс по документам пакета</span>
+                  <span class="i18n-en">Background import in BP: per-document progress for the package</span>
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+
+          <button class="shots-nav prev" type="button" data-shots-prev hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 5 7.5 12l7 7"/></svg>
+          </button>
+          <button class="shots-nav next" type="button" data-shots-next hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="shots-counter" hidden><span data-shots-index>1</span>&nbsp;/&nbsp;<span data-shots-total>6</span></p>
+          <p class="sr-only" role="status" aria-live="polite" data-shots-status></p>
         </div>
+
+        <p class="shots-hint" hidden>
+          <span class="i18n-ru">Листать: стрелки на картинке, клавиши ← → на клавиатуре или миниатюры ниже.</span>
+          <span class="i18n-en">Browse with the arrows on the picture, the ← → keys or the thumbnails below.</span>
+        </p>
+
+        <ul class="shots-thumbs" data-shots-thumbs hidden></ul>
       </section>
 
       <!-- ВИДЕО -->

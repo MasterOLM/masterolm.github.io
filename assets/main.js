@@ -60,6 +60,7 @@
     if (themeBtn) applyTheme(currentTheme());
     updateLightboxLabels();
     updateFeedbackLabels();
+    updateShotsLabels();
   }
 
   function detect() {
@@ -87,15 +88,19 @@
     });
   }
 
-  var galleryLinks = document.querySelectorAll('.gallery a[href]');
+  var galleryLinks = document.querySelectorAll('.gallery a[href], .shots a[href]');
   var lightbox = null;
   var lightboxImg = null;
   var lightboxCaption = null;
   var lightboxClose = null;
+  var lightboxPrev = null;
+  var lightboxNext = null;
   var lightboxTrigger = null;
+  var lightboxGroup = [];
+  var lightboxIndex = 0;
   var lightboxLabels = {
-    ru: { dialog: 'Просмотр скриншота', close: 'Закрыть' },
-    en: { dialog: 'Screenshot preview', close: 'Close' }
+    ru: { dialog: 'Просмотр скриншота', close: 'Закрыть', prev: 'Предыдущий скриншот', next: 'Следующий скриншот' },
+    en: { dialog: 'Screenshot preview', close: 'Close', prev: 'Previous screenshot', next: 'Next screenshot' }
   };
 
   function buildLightbox() {
@@ -106,6 +111,8 @@
     lightbox.setAttribute('aria-modal', 'true');
     lightbox.innerHTML =
       '<button type="button" class="lightbox-close"></button>' +
+      '<button type="button" class="lightbox-nav prev" data-lightbox-prev></button>' +
+      '<button type="button" class="lightbox-nav next" data-lightbox-next></button>' +
       '<figure class="lightbox-figure">' +
       '<img class="lightbox-img" alt="">' +
       '<figcaption class="lightbox-caption"></figcaption>' +
@@ -113,8 +120,12 @@
     lightboxImg = lightbox.querySelector('.lightbox-img');
     lightboxCaption = lightbox.querySelector('.lightbox-caption');
     lightboxClose = lightbox.querySelector('.lightbox-close');
+    lightboxPrev = lightbox.querySelector('[data-lightbox-prev]');
+    lightboxNext = lightbox.querySelector('[data-lightbox-next]');
 
     lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', function () { stepLightbox(-1); });
+    lightboxNext.addEventListener('click', function () { stepLightbox(1); });
     lightbox.addEventListener('click', function (e) {
       if (e.target === lightbox) closeLightbox();
     });
@@ -128,10 +139,16 @@
     lightbox.setAttribute('aria-label', dict.dialog);
     lightboxClose.setAttribute('aria-label', dict.close);
     lightboxClose.setAttribute('title', dict.close);
+    lightboxPrev.setAttribute('aria-label', dict.prev);
+    lightboxPrev.setAttribute('title', dict.prev);
+    lightboxNext.setAttribute('aria-label', dict.next);
+    lightboxNext.setAttribute('title', dict.next);
   }
 
-  function openLightbox(link) {
-    if (!lightbox) buildLightbox();
+  function showLightboxItem(index) {
+    if (!lightboxGroup.length) return;
+    lightboxIndex = (index + lightboxGroup.length) % lightboxGroup.length;
+    var link = lightboxGroup[lightboxIndex];
     var img = link.querySelector('img');
     var figure = link.closest('figure');
     var caption = figure ? figure.querySelector('figcaption') : null;
@@ -145,7 +162,27 @@
       lightboxCaption.innerHTML = '';
       lightboxCaption.hidden = true;
     }
+
+    var single = lightboxGroup.length < 2;
+    lightboxPrev.hidden = single;
+    lightboxNext.hidden = single;
+  }
+
+  function stepLightbox(delta) {
+    if (!lightbox || lightbox.hidden) return;
+    showLightboxItem(lightboxIndex + delta);
+  }
+
+  function openLightbox(link) {
+    if (!lightbox) buildLightbox();
+    var group = link.closest('.gallery, .shots');
+    lightboxGroup = group
+      ? Array.prototype.slice.call(group.querySelectorAll('a[href]'))
+      : [link];
+    if (lightboxGroup.indexOf(link) < 0) lightboxGroup = [link];
+
     updateLightboxLabels();
+    showLightboxItem(lightboxGroup.indexOf(link));
 
     lightboxTrigger = link;
     lightbox.hidden = false;
@@ -176,11 +213,137 @@
     if (e.key === 'Escape' || e.key === 'Esc') {
       e.preventDefault();
       closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      stepLightbox(-1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      stepLightbox(1);
     } else if (e.key === 'Tab') {
       e.preventDefault();
       lightboxClose.focus();
     }
   });
+
+  /* Галерея скриншотов продукта: показываем один кадр, листаем по кругу
+     стрелками на картинке, клавишами ← → и миниатюрами. */
+  var shotsRoot = document.querySelector('[data-shots]');
+  var shotsItems = shotsRoot ? Array.prototype.slice.call(shotsRoot.querySelectorAll('.shots-item')) : [];
+  var shotsThumbs = document.querySelector('[data-shots-thumbs]');
+  var shotsHint = document.querySelector('.shots-hint');
+  var shotsIndex = 0;
+  var shotsThumbsList = [];
+  var shotsLabels = {
+    ru: { prev: 'Предыдущий скриншот', next: 'Следующий скриншот', frame: 'Скриншот', of: 'из' },
+    en: { prev: 'Previous screenshot', next: 'Next screenshot', frame: 'Screenshot', of: 'of' }
+  };
+
+  function shotsDict() {
+    return shotsLabels[root.lang] || shotsLabels.ru;
+  }
+
+  function shotsCaption(item) {
+    var span = item.querySelector('figcaption .i18n-' + (root.lang === 'en' ? 'en' : 'ru'));
+    return span ? span.textContent.trim() : '';
+  }
+
+  function renderShots(index) {
+    if (!shotsItems.length) return;
+    shotsIndex = (index + shotsItems.length) % shotsItems.length;
+    var dict = shotsDict();
+    shotsItems.forEach(function (item, i) {
+      item.classList.toggle('is-active', i === shotsIndex);
+    });
+    shotsThumbsList.forEach(function (btn, i) {
+      btn.setAttribute('aria-current', i === shotsIndex ? 'true' : 'false');
+    });
+    var current = shotsRoot.querySelector('[data-shots-index]');
+    if (current) current.textContent = String(shotsIndex + 1);
+    var status = shotsRoot.querySelector('[data-shots-status]');
+    if (status) {
+      status.textContent = dict.frame + ' ' + (shotsIndex + 1) + ' ' + dict.of + ' ' +
+        shotsItems.length + ': ' + shotsCaption(shotsItems[shotsIndex]);
+    }
+  }
+
+  function updateShotsLabels() {
+    if (!shotsRoot || !shotsItems.length) return;
+    var dict = shotsDict();
+    var prev = shotsRoot.querySelector('[data-shots-prev]');
+    var next = shotsRoot.querySelector('[data-shots-next]');
+    if (prev) {
+      prev.setAttribute('aria-label', dict.prev);
+      prev.setAttribute('title', dict.prev + ' (←)');
+    }
+    if (next) {
+      next.setAttribute('aria-label', dict.next);
+      next.setAttribute('title', dict.next + ' (→)');
+    }
+    shotsThumbsList.forEach(function (btn, i) {
+      btn.setAttribute('aria-label', dict.frame + ' ' + (i + 1) + '. ' + shotsCaption(shotsItems[i]));
+    });
+    renderShots(shotsIndex);
+  }
+
+  if (shotsRoot && shotsItems.length) {
+    if (shotsThumbs) {
+      shotsItems.forEach(function (item, i) {
+        var img = item.querySelector('img');
+        var li = document.createElement('li');
+        var btn = document.createElement('button');
+        var thumb = document.createElement('img');
+        btn.type = 'button';
+        btn.className = 'shots-thumb';
+        thumb.alt = '';
+        thumb.loading = 'lazy';
+        thumb.decoding = 'async';
+        thumb.src = img ? img.getAttribute('src') : '';
+        btn.appendChild(thumb);
+        btn.addEventListener('click', function () { renderShots(i); });
+        li.appendChild(btn);
+        shotsThumbs.appendChild(li);
+        shotsThumbsList.push(btn);
+      });
+      shotsThumbs.hidden = false;
+    }
+
+    var shotsPrev = shotsRoot.querySelector('[data-shots-prev]');
+    var shotsNext = shotsRoot.querySelector('[data-shots-next]');
+    if (shotsPrev) {
+      shotsPrev.hidden = false;
+      shotsPrev.addEventListener('click', function () { renderShots(shotsIndex - 1); });
+    }
+    if (shotsNext) {
+      shotsNext.hidden = false;
+      shotsNext.addEventListener('click', function () { renderShots(shotsIndex + 1); });
+    }
+
+    var shotsCounter = shotsRoot.querySelector('.shots-counter');
+    var shotsTotal = shotsRoot.querySelector('[data-shots-total]');
+    if (shotsTotal) shotsTotal.textContent = String(shotsItems.length);
+    if (shotsCounter) shotsCounter.hidden = false;
+    if (shotsHint) shotsHint.hidden = false;
+
+    shotsRoot.setAttribute('data-shots-ready', '');
+
+    shotsRoot.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        renderShots(shotsIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        renderShots(shotsIndex + 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        renderShots(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        renderShots(shotsItems.length - 1);
+      }
+    });
+
+    updateShotsLabels();
+  }
 
   /* Форма заявки: плавающая кнопка + модалка со своей формой.
      Данные формируются в браузере и уходят в выбранный посетителем канал
