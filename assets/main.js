@@ -172,7 +172,7 @@
 
   /* Форма заявки: плавающая кнопка + модалка с формой Яндекс Форм.
      URL формы задаётся здесь или атрибутом data-feedback-form на <html>. */
-  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || '';
+  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || 'https://forms.yandex.ru/u/6af07f5b9029023a7359b948?iframe=1';
   var feedbackBtn = null;
   var feedbackDialog = null;
   var feedbackFrame = null;
