@@ -429,6 +429,49 @@ h1 {
 
 .gallery a { cursor: zoom-in; }
 
+/* Правый верхний блок визитки: языки, тема и контакты значками */
+.hero-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.hero-controls .lang-switch { position: static; }
+
+.contact-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--hero-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 25px;
+  border-radius: 999px;
+  color: var(--hero-muted);
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.icon-btn svg { display: block; width: 14px; height: 14px; }
+
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  color: var(--hero-text);
+  background: rgba(255, 255, 255, 0.14);
+}
+
 section { margin-bottom: 40px; }
 
 h2 {
@@ -605,7 +648,7 @@ html[lang="en"] .i18n-ru { display: none; }
 @media (max-width: 640px) {
   .wrap { padding: 28px 16px 24px; }
   .hero { padding: 24px 20px; }
-  .lang-switch { top: 14px; right: 14px; }
+  .hero-controls { top: 14px; right: 14px; gap: 6px; }
   .eyebrow { margin-top: 26px; }
   footer { font-size: 12px; }
 }
