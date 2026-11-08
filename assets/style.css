@@ -436,7 +436,16 @@ h1 {
   padding-top: 24px;
 }
 
-.hero-photo { margin: 0; }
+.hero-photo { margin: 0; position: relative; }
+
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: radial-gradient(ellipse at 50% 32%, transparent 42%, rgba(9, 22, 36, 0.55) 100%);
+  pointer-events: none;
+}
 
 .hero-photo img {
   display: block;
@@ -444,7 +453,7 @@ h1 {
   height: auto;
   max-width: 220px;
   margin: 0 auto;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: 50% 30%;
   border: 1px solid var(--hero-line);
