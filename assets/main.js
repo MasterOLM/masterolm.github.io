@@ -60,6 +60,7 @@
     if (themeBtn) applyTheme(currentTheme());
     updateLightboxLabels();
     updateFeedbackLabels();
+    updateShotsLabels();
   }
 
   function detect() {
@@ -179,6 +180,158 @@
     } else if (e.key === 'Tab') {
       e.preventDefault();
       lightboxClose.focus();
+    }
+  });
+
+  /* Скриншоты в модальном окне: кнопка в шапке страницы продукта.
+     Кадры описаны в <script type="application/json" id="shots-data"> и
+     подгружаются только после открытия окна. */
+  var shotsOpen = document.querySelector('[data-shots-open]');
+  var shotsDataEl = document.getElementById('shots-data');
+  var shotsModal = null;
+  var shotsList = [];
+  var shotsThumbButtons = [];
+  var shotsIndex = 0;
+  var shotsTrigger = null;
+  var shotsLabels = {
+    ru: { dialog: 'Скриншоты «Обмен JSON»', close: 'Закрыть', prev: 'Предыдущий скриншот', next: 'Следующий скриншот', frame: 'Скриншот' },
+    en: { dialog: '“JSON Exchange” screenshots', close: 'Close', prev: 'Previous screenshot', next: 'Next screenshot', frame: 'Screenshot' }
+  };
+
+  function shotsDict() {
+    return shotsLabels[root.lang] || shotsLabels.ru;
+  }
+
+  function shotsCaption(item) {
+    return (root.lang === 'en' ? item.en : item.ru) || item.ru || item.en || '';
+  }
+
+  function showShots(index) {
+    if (!shotsModal || !shotsList.length) return;
+    shotsIndex = (index + shotsList.length) % shotsList.length;
+    var item = shotsList[shotsIndex];
+    var img = shotsModal.querySelector('.lightbox-img');
+    img.src = item.src;
+    img.alt = item.alt || shotsCaption(item);
+    shotsModal.querySelector('.lightbox-caption').textContent = shotsCaption(item);
+    shotsModal.querySelector('[data-shots-index]').textContent = String(shotsIndex + 1);
+    shotsThumbButtons.forEach(function (btn, i) {
+      btn.setAttribute('aria-current', i === shotsIndex ? 'true' : 'false');
+    });
+  }
+
+  function buildShots() {
+    shotsModal = document.createElement('div');
+    shotsModal.className = 'lightbox shots-modal';
+    shotsModal.hidden = true;
+    shotsModal.setAttribute('role', 'dialog');
+    shotsModal.setAttribute('aria-modal', 'true');
+    shotsModal.innerHTML =
+      '<button type="button" class="lightbox-close"></button>' +
+      '<p class="shots-count" aria-live="polite"><span data-shots-index>1</span> / ' + shotsList.length + '</p>' +
+      '<button type="button" class="shots-nav prev" data-shots-prev></button>' +
+      '<button type="button" class="shots-nav next" data-shots-next></button>' +
+      '<figure class="lightbox-figure">' +
+      '<img class="lightbox-img" alt="">' +
+      '<figcaption class="lightbox-caption"></figcaption>' +
+      '<ul class="shots-thumbs" data-shots-thumbs></ul>' +
+      '</figure>';
+
+    shotsModal.querySelector('.lightbox-close').addEventListener('click', closeShots);
+    shotsModal.querySelector('[data-shots-prev]').addEventListener('click', function () {
+      showShots(shotsIndex - 1);
+    });
+    shotsModal.querySelector('[data-shots-next]').addEventListener('click', function () {
+      showShots(shotsIndex + 1);
+    });
+    shotsModal.addEventListener('click', function (e) {
+      if (e.target === shotsModal) closeShots();
+    });
+
+    var thumbs = shotsModal.querySelector('[data-shots-thumbs]');
+    shotsList.forEach(function (item, i) {
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      var thumb = document.createElement('img');
+      btn.type = 'button';
+      btn.className = 'shots-thumb';
+      thumb.alt = '';
+      thumb.loading = 'lazy';
+      thumb.decoding = 'async';
+      thumb.src = item.src;
+      btn.appendChild(thumb);
+      btn.addEventListener('click', function () { showShots(i); });
+      li.appendChild(btn);
+      thumbs.appendChild(li);
+      shotsThumbButtons.push(btn);
+    });
+
+    document.body.appendChild(shotsModal);
+  }
+
+  function updateShotsLabels() {
+    if (!shotsModal) return;
+    var dict = shotsDict();
+    var close = shotsModal.querySelector('.lightbox-close');
+    var prev = shotsModal.querySelector('[data-shots-prev]');
+    var next = shotsModal.querySelector('[data-shots-next]');
+    shotsModal.setAttribute('aria-label', dict.dialog);
+    close.setAttribute('aria-label', dict.close);
+    close.setAttribute('title', dict.close);
+    prev.setAttribute('aria-label', dict.prev);
+    prev.setAttribute('title', dict.prev + ' (←)');
+    next.setAttribute('aria-label', dict.next);
+    next.setAttribute('title', dict.next + ' (→)');
+    shotsThumbButtons.forEach(function (btn, i) {
+      btn.setAttribute('aria-label', dict.frame + ' ' + (i + 1) + '. ' + shotsCaption(shotsList[i]));
+    });
+    showShots(shotsIndex);
+  }
+
+  function openShots() {
+    if (!shotsModal) buildShots();
+    updateShotsLabels();
+    shotsTrigger = shotsOpen;
+    shotsModal.hidden = false;
+    document.body.classList.add('lightbox-open');
+    shotsModal.querySelector('.lightbox-close').focus();
+  }
+
+  function closeShots() {
+    if (!shotsModal || shotsModal.hidden) return;
+    shotsModal.hidden = true;
+    document.body.classList.remove('lightbox-open');
+    if (shotsTrigger) shotsTrigger.focus();
+    shotsTrigger = null;
+  }
+
+  if (shotsOpen && shotsDataEl) {
+    try {
+      shotsList = JSON.parse(shotsDataEl.textContent) || [];
+    } catch (e) {
+      shotsList = [];
+    }
+    if (shotsList.length) {
+      shotsOpen.hidden = false;
+      shotsOpen.setAttribute('aria-haspopup', 'dialog');
+      shotsOpen.addEventListener('click', openShots);
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (!shotsModal || shotsModal.hidden) return;
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      e.preventDefault();
+      closeShots();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      showShots(shotsIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      showShots(shotsIndex + 1);
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      shotsModal.querySelector('.lightbox-close').focus();
     }
   });
 
