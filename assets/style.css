@@ -1016,7 +1016,7 @@ html[lang="en"] .i18n-ru { display: none; }
 
 @media (min-width: 880px) {
   .home .wrap {
-    padding: 36px 20px 24px;
+    padding: 28px 20px 20px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -1024,20 +1024,20 @@ html[lang="en"] .i18n-ru { display: none; }
   }
 
   .home .hero {
-    padding: 38px 42px 42px;
+    padding: 23px 30px 26px;
     margin-bottom: 24px;
   }
 
   .home .hero-controls {
     position: static;
     width: fit-content;
-    margin: 0 0 14px auto;
+    margin: 0 0 12px auto;
     gap: 8px;
   }
 
   .home .hero-body {
-    grid-template-columns: minmax(0, 1fr) 250px;
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) 190px;
+    gap: 32px;
     padding-top: 0;
   }
 
@@ -1045,14 +1045,14 @@ html[lang="en"] .i18n-ru { display: none; }
 
   .home .hero-photo img { max-width: none; }
 
-  .home h1 { font-size: 48px; margin-bottom: 18px; }
+  .home h1 { font-size: 42px; margin-bottom: 12px; }
 
-  .home .role { font-size: 17.5px; line-height: 1.55; margin-bottom: 0; }
+  .home .role { font-size: 16.5px; line-height: 1.5; margin-bottom: 0; }
 
   .home .board {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 18px;
   }
 
   .home section { margin-bottom: 0; }
@@ -1063,30 +1063,30 @@ html[lang="en"] .i18n-ru { display: none; }
     margin: 0;
   }
 
-  .home .stats li { padding: 30px 24px; }
+  .home .stats li { padding: 17px 16px; }
 
-  .home .stat-value { font-size: 38px; }
+  .home .stat-value { font-size: 30px; }
 
-  .home .stat-label { margin-top: 10px; font-size: 14px; line-height: 1.45; hyphens: auto; overflow-wrap: break-word; }
+  .home .stat-label { margin-top: 8px; font-size: 13px; line-height: 1.4; hyphens: auto; overflow-wrap: break-word; }
 
   .home .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
 
-  .home .point { padding: 34px 32px; }
+  .home .point { padding: 20px 21px; }
 
-  .home .point .num { display: block; margin: 0 0 16px; font-size: 13px; }
+  .home .point .num { display: block; margin: 0 0 9px; font-size: 12.5px; }
 
-  .home .point h3 { display: block; font-size: 17.5px; line-height: 1.5; }
+  .home .point h3 { display: block; font-size: 16px; line-height: 1.45; }
 
-  .home .product { padding: 38px 36px; gap: 30px; }
+  .home .product { padding: 24px 26px; gap: 22px; }
 
-  .home .product h3 { font-size: 26px; margin-bottom: 12px; }
+  .home .product h3 { font-size: 23px; margin-bottom: 9px; }
 
-  .home .product p { font-size: 16px; line-height: 1.55; }
+  .home .product p { font-size: 15px; line-height: 1.5; }
 
-  .home .product .more { font-size: 14px; margin-top: 12px; }
+  .home .product .more { font-size: 13.5px; margin-top: 10px; }
 
   .home .product .arrow { font-size: 26px; }
 
@@ -1099,11 +1099,11 @@ html[lang="en"] .i18n-ru { display: none; }
   .home .contacts li:nth-child(4),
   .home .contacts li:nth-child(5) { grid-column: span 3; }
 
-  .home .contact { padding: 26px 24px; gap: 9px; }
+  .home .contact { padding: 15px 16px; gap: 5px; }
 
   .home .contact .label { font-size: 12px; }
 
-  .home .contact .value { font-size: 16px; line-height: 1.45; }
+  .home .contact .value { font-size: 15px; line-height: 1.4; }
 
-  .home footer { margin-top: 28px; font-size: 13px; }
+  .home footer { margin-top: 18px; font-size: 12.5px; }
 }
