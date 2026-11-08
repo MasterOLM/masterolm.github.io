@@ -196,6 +196,7 @@
   var feedbackDialog = null;
   var feedbackForm = null;
   var feedbackStatus = null;
+  var feedbackFrame = null;
   var feedbackClose = null;
 
   function buildFeedback() {
@@ -218,6 +219,11 @@
       '<button type="button" class="feedback-close"></button>' +
       '<h2 class="feedback-title" id="feedback-title"><span class="i18n-ru">Оставить заявку</span><span class="i18n-en">Send a request</span></h2>' +
       '<p class="feedback-hint"><span class="i18n-ru">Отвечу в течение рабочего дня.</span><span class="i18n-en">I reply within one business day.</span></p>' +
+      '<div class="feedback-tabs" role="tablist">' +
+      '<button type="button" class="feedback-tab is-active" role="tab" aria-selected="true" data-pane="quick"><span class="i18n-ru">Быстрая заявка</span><span class="i18n-en">Quick request</span></button>' +
+      '<button type="button" class="feedback-tab" role="tab" aria-selected="false" data-pane="files"><span class="i18n-ru">С файлами</span><span class="i18n-en">With files</span></button>' +
+      '</div>' +
+      '<div class="feedback-pane" data-pane="quick">' +
       '<form class="feedback-form" novalidate>' +
       '<label class="field">' +
       '<span class="field-label"><span class="i18n-ru">Ваше имя</span><span class="i18n-en">Your name</span></span>' +
@@ -242,12 +248,17 @@
       '<button type="button" class="btn" data-channel="email">E-mail</button>' +
       '</div>' +
       '</form>' +
-      '<p class="feedback-fallback"><span class="i18n-ru">Нужно приложить скриншоты? <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Расширенная форма с файлами</a>.</span><span class="i18n-en">Need to attach screenshots? <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Extended form with files</a>.</span></p>' +
+      '</div>' +
+      '<div class="feedback-pane" data-pane="files" hidden>' +
+      '<div class="feedback-frame"><iframe title="Форма заявки с файлами"></iframe></div>' +
+      '<p class="feedback-fallback"><span class="i18n-ru">Форма Яндекс Форм: до 20 файлов, до 20 МБ. <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Открыть в новой вкладке</a>.</span><span class="i18n-en">Yandex Forms: up to 20 files, 20 MB. <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Open in a new tab</a>.</span></p>' +
+      '</div>' +
       '</div>';
 
     feedbackForm = feedbackDialog.querySelector('.feedback-form');
     feedbackStatus = feedbackDialog.querySelector('.feedback-status');
     feedbackClose = feedbackDialog.querySelector('.feedback-close');
+    feedbackFrame = feedbackDialog.querySelector('.feedback-frame iframe');
 
     feedbackForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -259,12 +270,31 @@
     });
     feedbackClose.addEventListener('click', closeFeedback);
     feedbackDialog.addEventListener('click', function (e) {
+      var tab = e.target.closest('.feedback-tab');
+      if (tab) { switchPane(tab.dataset.pane); return; }
       if (e.target === feedbackDialog) closeFeedback();
     });
     feedbackBtn.addEventListener('click', openFeedback);
 
     document.body.appendChild(feedbackBtn);
     document.body.appendChild(feedbackDialog);
+  }
+
+  function switchPane(name) {
+    var tabs = feedbackDialog.querySelectorAll('.feedback-tab');
+    var panes = feedbackDialog.querySelectorAll('.feedback-pane');
+    for (var i = 0; i < tabs.length; i++) {
+      var on = tabs[i].dataset.pane === name;
+      tabs[i].classList.toggle('is-active', on);
+      tabs[i].setAttribute('aria-selected', String(on));
+    }
+    for (var j = 0; j < panes.length; j++) {
+      panes[j].hidden = panes[j].dataset.pane !== name;
+    }
+    if (name === 'files' && feedbackFrame && !feedbackFrame.getAttribute('src')) {
+      feedbackFrame.src = FEEDBACK_FORM;
+      if (window.siteGoal) window.siteGoal('feedback_files_open');
+    }
   }
 
   function feedbackMessage(channel) {

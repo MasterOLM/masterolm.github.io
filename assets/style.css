@@ -618,6 +618,46 @@ h1 {
 
 .feedback-hint { margin: 0; color: var(--muted); font-size: 13.5px; }
 
+.feedback-tabs {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--seg-bg);
+}
+
+.feedback-tab {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.feedback-tab:hover { color: var(--text); }
+
+.feedback-tab.is-active { background: var(--accent-soft-strong); color: var(--accent-on-soft); }
+
+.feedback-pane { display: flex; flex-direction: column; gap: 8px; }
+
+.feedback-pane[hidden] { display: none; }
+
+.feedback-frame {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.feedback-frame iframe { display: block; width: 100%; height: 490px; border: 0; }
+
 .feedback-form {
   display: flex;
   flex-direction: column;
@@ -730,6 +770,13 @@ body.feedback-open { overflow: hidden; }
   .feedback-btn { right: 14px; bottom: 14px; padding: 10px 15px; font-size: 13px; }
   .feedback { padding: 12px; }
   .feedback-panel { padding: 18px; max-height: calc(100vh - 24px); }
+  .feedback-frame iframe { height: 520px; }
+}
+
+/* Высота встроенной формы Яндекс Форм подобрана по её фактической вёрстке:
+   516px → 484, 420–500px → 522–540, ≤360px → 558. Иначе остаётся пустое поле. */
+@media (max-width: 480px) {
+  .feedback-frame iframe { height: 560px; }
 }
 
 section { margin-bottom: 40px; }
