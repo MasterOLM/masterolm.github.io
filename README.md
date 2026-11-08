@@ -91,6 +91,10 @@
   `product.html` — `SoftwareApplication` с `offers` (цены) и `BreadcrumbList`; `purchase.html` — `HowTo` и `BreadcrumbList`;
   `faq.html` — `FAQPage`; `install.html` — `TechArticle` и `BreadcrumbList`.
   При смене цен править `offers` в `product.html`, иначе разметка разойдётся с прайсом.
+- **Семантическое ядро.** Ключевые фразы заданы в `knowsAbout` у `Person` в `index.html` и продублированы в
+  `title`/`description`/видимом тексте: «1С Предприятие», «Расширения 1С», «Интеграция 1С», «JSON файл»,
+  «Сервисы 1С», «Автоматизация 1С». Формулировки сверены с Яндекс.Wordstat — при правках сохранять их дословно
+  (в частности, «1С Предприятие» без двоеточия).
 - **Яндекс.Метрика.** Номер счётчика — переменная `YM_ID` в начале `assets/analytics.js` (сейчас `113935350`).
   Подключение одно на все страницы, поэтому `<noscript>`-пиксель из стандартного кода не используется.
   Цели-события: `email_click` (клик по `mailto:`), `telegram_click`, `purchase_open`, `video_open`.
