@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 20px;
 }
@@ -27,7 +28,9 @@
   position: static;
 }
 
-.topbar .lang-switch { margin-left: auto; }
+.topbar .contact-icons { margin-left: auto; }
+
+.topbar .lang-switch { margin-left: 0; }
 
 .badges {
   display: flex;

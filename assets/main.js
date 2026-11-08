@@ -401,4 +401,16 @@
   try { storedTheme = localStorage.getItem(THEME_KEY); } catch (e) { storedTheme = null; }
   applyTheme(storedTheme === 'light' ? 'light' : 'dark');
   apply(detect());
+
+  /* Вариант фона страницы: ?bg=1..4 (сохраняется, ?bg=0 — вернуть базовый) */
+  var BG_KEY = 'site-bg';
+  var bgParam = new URLSearchParams(location.search).get('bg');
+  var bgVariant = null;
+  if (bgParam !== null) {
+    bgVariant = bgParam;
+    try { localStorage.setItem(BG_KEY, bgParam); } catch (e) { /* приватный режим */ }
+  } else {
+    try { bgVariant = localStorage.getItem(BG_KEY); } catch (e) { bgVariant = null; }
+  }
+  if (bgVariant && bgVariant !== '0') root.setAttribute('data-bg', bgVariant);
 })();

@@ -74,6 +74,10 @@
   --cta-grad: linear-gradient(180deg, rgba(224, 161, 99, 0.1), rgba(224, 161, 99, 0.02));
   --best-grad: linear-gradient(180deg, rgba(224, 161, 99, 0.14), rgba(224, 161, 99, 0.03));
   --green: #6fcf97;
+  --grid-line: rgba(196, 214, 235, 0.055);
+  --bg-wash: rgba(23, 57, 90, 0.5);
+  --bg-wash-strong: rgba(29, 74, 116, 0.55);
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
   --backdrop: rgba(6, 12, 20, 0.94);
   --hero-bg: linear-gradient(165deg, #17395a 0%, #0d2033 62%, #0b1a2a 100%);
   --hero-line: rgba(214, 231, 247, 0.24);
@@ -128,6 +132,10 @@ html[data-theme="light"] {
   --warn-line: rgba(160, 105, 0, 0.5);
   --warn-bg: rgba(255, 210, 122, 0.28);
   --green: #2e7d53;
+  --grid-line: rgba(18, 30, 44, 0.07);
+  --bg-wash: rgba(23, 57, 90, 0.07);
+  --bg-wash-strong: rgba(23, 57, 90, 0.14);
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
   --backdrop: rgba(238, 241, 245, 0.96);
   --cta-grad: linear-gradient(180deg, rgba(168, 99, 44, 0.08), rgba(168, 99, 44, 0.02));
   --best-grad: linear-gradient(180deg, rgba(168, 99, 44, 0.12), rgba(168, 99, 44, 0.02));
@@ -141,10 +149,53 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(1200px 600px at 50% -10%, var(--bg-glow) 0%, var(--bg) 55%) fixed;
+  background-color: var(--bg);
+  background-image: radial-gradient(1200px 600px at 50% -10%, var(--bg-glow) 0%, transparent 55%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--text);
   font: 16px/1.6 var(--body);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Варианты фона страницы: html[data-bg="1..4"] (выбор — параметром ?bg=N) */
+html[data-bg="1"] body {
+  background-image:
+    radial-gradient(1000px 520px at 50% -10%, var(--bg-glow) 0%, transparent 62%),
+    radial-gradient(820px 520px at 96% 100%, var(--bg-glow) 0%, transparent 62%);
+}
+
+html[data-bg="2"] body {
+  background-image:
+    repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 40px),
+    radial-gradient(1000px 520px at 50% -10%, var(--bg-glow) 0%, transparent 62%);
+  background-repeat: repeat, repeat, no-repeat;
+}
+
+html[data-bg="3"] body {
+  background-image:
+    var(--noise),
+    radial-gradient(1000px 520px at 50% -10%, var(--bg-glow) 0%, transparent 62%);
+  background-repeat: repeat, no-repeat;
+  background-size: 160px 160px, auto;
+  background-position: 0 0, center top;
+}
+
+html[data-bg="4"] body {
+  background-image:
+    linear-gradient(158deg, var(--bg-wash-strong) 0%, transparent 48%, var(--bg-wash) 100%),
+    radial-gradient(1000px 520px at 50% -10%, var(--bg-glow) 0%, transparent 62%);
+  background-repeat: no-repeat, no-repeat;
+}
+
+@media (max-width: 640px) {
+  html[data-bg="2"] body {
+    background-image:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      radial-gradient(700px 420px at 50% -6%, var(--bg-glow) 0%, transparent 62%);
+  }
 }
 
 body.lightbox-open { overflow: hidden; }
@@ -548,6 +599,20 @@ h1 {
 .icon-btn:focus-visible {
   color: var(--hero-text);
   background: rgba(255, 255, 255, 0.14);
+}
+
+/* Те же значки, но на фоне страницы (верхняя панель внутренних страниц) */
+.topbar .contact-icons {
+  border-color: var(--line);
+  background: var(--control-bg);
+}
+
+.topbar .icon-btn { color: var(--muted); }
+
+.topbar .icon-btn:hover,
+.topbar .icon-btn:focus-visible {
+  color: var(--text);
+  background: var(--surface-tint-strong);
 }
 
 /* Плавающая кнопка заявки и модальное окно с формой */
