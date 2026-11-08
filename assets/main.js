@@ -15,8 +15,20 @@
     en: { dark: 'Switch to light theme', light: 'Switch to dark theme' }
   };
   var feedbackLabels = {
-    ru: { dialog: 'Заявка', close: 'Закрыть', open: 'Оставить заявку' },
-    en: { dialog: 'Request', close: 'Close', open: 'Request a quote' }
+    ru: {
+      dialog: 'Заявка', close: 'Закрыть', open: 'Оставить заявку',
+      needContact: 'Укажите e-mail или телефон — иначе не смогу ответить.',
+      needMessage: 'Напишите пару слов о задаче.',
+      needConsent: 'Нужно согласие на обработку персональных данных.',
+      opened: 'Готово. В открывшемся окне нажмите «Отправить» — скриншоты и файлы можно приложить там же.'
+    },
+    en: {
+      dialog: 'Request', close: 'Close', open: 'Request a quote',
+      needContact: 'Please add an e-mail or phone number, otherwise I cannot reply.',
+      needMessage: 'Please describe your task in a few words.',
+      needConsent: 'Consent to personal data processing is required.',
+      opened: 'Done. Press “Send” in the window that opened — you can attach screenshots there.'
+    }
   };
 
   function currentTheme() {
@@ -170,12 +182,20 @@
     }
   });
 
-  /* Форма заявки: плавающая кнопка + модалка с формой Яндекс Форм.
-     URL формы задаётся здесь или атрибутом data-feedback-form на <html>. */
-  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || 'https://forms.yandex.ru/u/6af07f5b9029023a7359b948?iframe=1';
+  /* Форма заявки: плавающая кнопка + модалка со своей формой.
+     Данные формируются в браузере и уходят в выбранный посетителем канал
+     (Telegram, WhatsApp, почта) — сторонние сервисы форм не используются.
+     data-feedback-form — ссылка на расширенную форму для вложений (необязательно). */
+  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || 'https://forms.yandex.ru/u/6af07f5b9029023a7359b948';
+  var FEEDBACK_CHANNELS = {
+    telegram: 'https://t.me/Master_OL',
+    whatsapp: 'https://wa.me/79685756688',
+    email: 'm_aster@inbox.ru'
+  };
   var feedbackBtn = null;
   var feedbackDialog = null;
-  var feedbackFrame = null;
+  var feedbackForm = null;
+  var feedbackStatus = null;
   var feedbackClose = null;
 
   function buildFeedback() {
@@ -198,15 +218,45 @@
       '<button type="button" class="feedback-close"></button>' +
       '<h2 class="feedback-title" id="feedback-title"><span class="i18n-ru">Оставить заявку</span><span class="i18n-en">Send a request</span></h2>' +
       '<p class="feedback-hint"><span class="i18n-ru">Отвечу в течение рабочего дня.</span><span class="i18n-en">I reply within one business day.</span></p>' +
-      (FEEDBACK_FORM
-        ? '<div class="feedback-frame"><iframe title="Форма заявки" loading="lazy"></iframe></div>' +
-          '<p class="feedback-fallback"><span class="i18n-ru">Не открывается? Напишите на <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> или в <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>.</span><span class="i18n-en">Form not working? Email <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> or use <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a>.</span></p>'
-        : '<p class="feedback-note"><span class="i18n-ru">Напишите на <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> или в <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a> — этого достаточно, чтобы обсудить задачу.</span><span class="i18n-en">Email <a href="mailto:m_aster@inbox.ru">m_aster@inbox.ru</a> or message me on <a href="https://t.me/Master_OL" target="_blank" rel="noopener">Telegram</a> — that is enough to discuss your task.</span></p>') +
+      '<form class="feedback-form" novalidate>' +
+      '<label class="field">' +
+      '<span class="field-label"><span class="i18n-ru">Ваше имя</span><span class="i18n-en">Your name</span></span>' +
+      '<input type="text" name="name" autocomplete="name" maxlength="80">' +
+      '</label>' +
+      '<label class="field">' +
+      '<span class="field-label"><span class="i18n-ru">Контакт для ответа</span><span class="i18n-en">Contact</span> <span class="field-req">*</span></span>' +
+      '<input type="text" name="contact" autocomplete="email" maxlength="120" placeholder="E-mail, телефон или @telegram">' +
+      '</label>' +
+      '<label class="field">' +
+      '<span class="field-label"><span class="i18n-ru">Задача</span><span class="i18n-en">Task</span> <span class="field-req">*</span></span>' +
+      '<textarea name="message" rows="4" maxlength="2000"></textarea>' +
+      '</label>' +
+      '<label class="consent">' +
+      '<input type="checkbox" name="consent">' +
+      '<span><span class="i18n-ru">Согласен на <a href="privacy.html" target="_blank" rel="noopener">обработку персональных данных</a>.</span><span class="i18n-en">I agree to the <a href="privacy.html" target="_blank" rel="noopener">processing of my personal data</a>.</span></span>' +
+      '</label>' +
+      '<p class="feedback-status" role="status" aria-live="polite"></p>' +
+      '<div class="feedback-actions">' +
+      '<button type="submit" class="btn btn-primary" data-channel="telegram"><span class="i18n-ru">Отправить в Telegram</span><span class="i18n-en">Send via Telegram</span></button>' +
+      '<button type="button" class="btn" data-channel="whatsapp">WhatsApp</button>' +
+      '<button type="button" class="btn" data-channel="email">E-mail</button>' +
+      '</div>' +
+      '</form>' +
+      '<p class="feedback-fallback"><span class="i18n-ru">Нужно приложить скриншоты? <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Расширенная форма с файлами</a>.</span><span class="i18n-en">Need to attach screenshots? <a href="' + FEEDBACK_FORM + '" target="_blank" rel="noopener">Extended form with files</a>.</span></p>' +
       '</div>';
 
-    feedbackFrame = feedbackDialog.querySelector('iframe');
+    feedbackForm = feedbackDialog.querySelector('.feedback-form');
+    feedbackStatus = feedbackDialog.querySelector('.feedback-status');
     feedbackClose = feedbackDialog.querySelector('.feedback-close');
 
+    feedbackForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      sendFeedback('telegram');
+    });
+    feedbackForm.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-channel]');
+      if (btn && btn.type !== 'submit') sendFeedback(btn.dataset.channel);
+    });
     feedbackClose.addEventListener('click', closeFeedback);
     feedbackDialog.addEventListener('click', function (e) {
       if (e.target === feedbackDialog) closeFeedback();
@@ -216,6 +266,66 @@
     document.body.appendChild(feedbackBtn);
     document.body.appendChild(feedbackDialog);
   }
+
+  function feedbackMessage(channel) {
+    var dict = feedbackLabels[root.lang] || feedbackLabels.ru;
+    var name = feedbackForm.elements['name'].value.trim();
+    var contact = feedbackForm.elements['contact'].value.trim();
+    var message = feedbackForm.elements['message'].value.trim();
+    var isRu = root.lang !== 'en';
+
+    if (!contact) { setFeedbackStatus(dict.needContact, 'contact'); return null; }
+    if (!message) { setFeedbackStatus(dict.needMessage, 'message'); return null; }
+    if (!feedbackForm.elements['consent'].checked) { setFeedbackStatus(dict.needConsent, 'consent'); return null; }
+
+    var lines = [isRu ? 'Заявка с сайта obmenjson.ru' : 'Request from obmenjson.ru', ''];
+    if (name) lines.push((isRu ? 'Имя: ' : 'Name: ') + name);
+    lines.push((isRu ? 'Контакт: ' : 'Contact: ') + contact);
+    lines.push('');
+    lines.push(message);
+
+    setFeedbackStatus(dict.opened, null);
+    return {
+      text: lines.join('\n'),
+      subject: (isRu ? 'Заявка с сайта obmenjson.ru' : 'Request from obmenjson.ru') + (name ? ' — ' + name : '')
+    };
+  }
+
+  function setFeedbackStatus(text, fieldName) {
+    if (!feedbackStatus) return;
+    feedbackStatus.textContent = text || '';
+    feedbackStatus.classList.toggle('is-error', Boolean(fieldName));
+    for (var i = 0; i < feedbackForm.elements.length; i++) {
+      feedbackForm.elements[i].classList && feedbackForm.elements[i].classList.remove('is-invalid');
+    }
+    if (fieldName) {
+      var field = feedbackForm.elements[fieldName];
+      if (field) {
+        field.classList.add('is-invalid');
+        field.focus();
+      }
+    }
+  }
+
+  function sendFeedback(channel) {
+    var payload = feedbackMessage(channel);
+    if (!payload) return;
+    var url;
+    if (channel === 'whatsapp') {
+      url = FEEDBACK_CHANNELS.whatsapp + '?text=' + encodeURIComponent(payload.text);
+      window.open(url, '_blank', 'noopener');
+    } else if (channel === 'email') {
+      url = 'mailto:' + FEEDBACK_CHANNELS.email +
+        '?subject=' + encodeURIComponent(payload.subject) +
+        '&body=' + encodeURIComponent(payload.text);
+      window.location.href = url;
+    } else {
+      url = FEEDBACK_CHANNELS.telegram + '?text=' + encodeURIComponent(payload.text);
+      window.open(url, '_blank', 'noopener');
+    }
+    if (window.siteGoal) window.siteGoal('feedback_send_' + channel);
+  }
+
 
   function updateFeedbackLabels() {
     if (!feedbackDialog) return;
@@ -229,7 +339,6 @@
 
   function openFeedback() {
     if (!feedbackDialog) buildFeedback();
-    if (feedbackFrame && !feedbackFrame.getAttribute('src')) feedbackFrame.src = FEEDBACK_FORM;
     updateFeedbackLabels();
     feedbackDialog.hidden = false;
     document.body.classList.add('feedback-open');
