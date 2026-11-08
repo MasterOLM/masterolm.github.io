@@ -194,6 +194,44 @@
   border-top: 1px solid var(--line);
 }
 
+/* Оглавление страницы продукта */
+.toc {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-tint);
+}
+
+.toc p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.toc ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+.toc a {
+  color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.toc a:hover {
+  color: var(--accent-on-soft);
+  border-bottom-color: var(--accent-line);
+}
+
 /* Скриншоты в модальном окне: кнопка «Скриншоты» в шапке страницы.
    Базовый оверлей и подпись берутся из .lightbox (assets/style.css). */
 .shots-modal .lightbox-img { max-height: calc(100vh - 300px); }

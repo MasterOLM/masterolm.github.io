@@ -61,6 +61,7 @@
     updateLightboxLabels();
     updateFeedbackLabels();
     updateShotsLabels();
+    updateToTopLabels();
   }
 
   function detect() {
@@ -546,6 +547,44 @@
       closeFeedback();
     }
   });
+
+  /* Кнопка «наверх»: показывается, когда первый экран ушёл вверх */
+  var toTopBtn = null;
+  var toTopLabels = {
+    ru: { label: 'Наверх страницы' },
+    en: { label: 'Back to top' }
+  };
+
+  function updateToTopLabels() {
+    if (!toTopBtn) return;
+    var dict = toTopLabels[root.lang] || toTopLabels.ru;
+    toTopBtn.setAttribute('aria-label', dict.label);
+    toTopBtn.setAttribute('title', dict.label);
+  }
+
+  function initToTop() {
+    if (document.body.scrollHeight <= window.innerHeight * 1.3) return;
+    toTopBtn = document.createElement('button');
+    toTopBtn.type = 'button';
+    toTopBtn.className = 'to-top';
+    toTopBtn.hidden = true;
+    toTopBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    toTopBtn.addEventListener('click', function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    document.body.appendChild(toTopBtn);
+    updateToTopLabels();
+
+    var toggleToTop = function () {
+      toTopBtn.hidden = window.scrollY < Math.max(280, window.innerHeight * 0.5);
+    };
+    toggleToTop();
+    window.addEventListener('scroll', toggleToTop, { passive: true });
+    window.addEventListener('resize', toggleToTop);
+  }
+
+  initToTop();
 
   var year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());

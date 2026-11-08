@@ -933,35 +933,32 @@ h3 { font-family: var(--body); font-weight: 600; }
 
 .spec ul a:hover { border-bottom-color: var(--link-line-hover); }
 
-.contacts {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.contact {
+/* Контакты на главной: одна плашка в стиле остальных карточек, только иконки */
+.contacts-bar {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 20px;
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.18s ease, border-color 0.18s ease;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 14px 16px;
 }
 
-.contact:hover { background: var(--card-hover); border-color: var(--accent-line); }
-
-.contact .label {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
+.contacts-bar .icon-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--text-soft);
 }
 
-.contact .value { font-size: 15px; }
+.contacts-bar .icon-btn svg { width: 20px; height: 20px; }
+
+.contacts-bar .icon-btn:hover,
+.contacts-bar .icon-btn:focus-visible {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
 
 footer {
   display: flex;
@@ -1092,18 +1089,101 @@ html[lang="en"] .i18n-ru { display: none; }
 
   .home .note { font-size: 14px; margin: 12px 0 0; }
 
-  .home .contacts { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin: 0; }
+  .home .contacts-bar { padding: 10px 8px; gap: 2px; }
 
-  .home .contacts li { grid-column: span 2; }
-
-  .home .contacts li:nth-child(4),
-  .home .contacts li:nth-child(5) { grid-column: span 3; }
-
-  .home .contact { padding: 15px 16px; gap: 5px; }
-
-  .home .contact .label { font-size: 12px; }
-
-  .home .contact .value { font-size: 15px; line-height: 1.4; }
+  .home .contacts-bar .icon-btn { width: 40px; height: 40px; }
 
   .home footer { margin-top: 18px; font-size: 12.5px; }
+}
+
+/* Хлебные крошки на внутренних страницах */
+.crumbs {
+  margin: 0 0 16px;
+  font-size: 12.5px;
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.crumbs li + li::before {
+  content: "/";
+  color: var(--line-strong);
+}
+
+.crumbs a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.crumbs a:hover {
+  color: var(--text);
+  border-bottom-color: var(--line-strong);
+}
+
+.crumbs [aria-current="page"] { color: var(--text-soft); }
+
+/* Кнопка «наверх»: появляется, когда первый экран прокручен */
+.to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 84px;
+  z-index: 89;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(6, 14, 26, 0.22);
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.to-top[hidden] { display: none; }
+
+.to-top svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.to-top:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background: var(--card-hover);
+}
+
+/* Текущая страница в подвале */
+footer a.foot-link[aria-current="page"] {
+  color: var(--text-soft);
+  border-bottom-color: var(--line-strong);
+}
+
+@media (max-width: 640px) {
+  .to-top {
+    right: 16px;
+    bottom: 78px;
+    width: 40px;
+    height: 40px;
+  }
 }
