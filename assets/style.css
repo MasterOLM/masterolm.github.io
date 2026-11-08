@@ -451,7 +451,7 @@ h1 {
   display: block;
   width: 100%;
   height: auto;
-  max-width: 220px;
+  max-width: 180px;
   margin: 0 auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -461,7 +461,7 @@ h1 {
 }
 
 @media (min-width: 760px) {
-  .hero-body { grid-template-columns: minmax(0, 1fr) 236px; }
+  .hero-body { grid-template-columns: minmax(0, 1fr) 200px; }
   .hero-photo img { max-width: none; }
 }
 
