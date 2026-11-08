@@ -186,7 +186,7 @@
      Данные формируются в браузере и уходят в выбранный посетителем канал
      (Telegram, WhatsApp, почта) — сторонние сервисы форм не используются.
      data-feedback-form — ссылка на расширенную форму для вложений (необязательно). */
-  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || 'https://forms.yandex.ru/u/6af07f5b9029023a7359b948';
+  var FEEDBACK_FORM = root.getAttribute('data-feedback-form') || 'https://forms.yandex.ru/u/6af07f5b9029023a7359b948?iframe=1';
   var FEEDBACK_CHANNELS = {
     telegram: 'https://t.me/Master_OL',
     whatsapp: 'https://wa.me/79685756688',
