@@ -17,7 +17,7 @@
   margin: 24px 0 8px;
   font-size: 16.5px;
   line-height: 1.45;
-  color: #dbe7ff;
+  color: var(--heading-soft);
 }
 
 .doc-page .doc h2[id],
@@ -25,7 +25,7 @@
 
 .doc-page .lead {
   margin: 0 0 18px;
-  color: #c7d3e3;
+  color: var(--text-soft);
   font-size: 15.5px;
 }
 
@@ -33,8 +33,8 @@
   margin: 0 0 10px;
   padding: 16px 18px;
   border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+  background: var(--surface-tint);
 }
 
 .toc p {
@@ -47,20 +47,20 @@
 
 .toc ol { margin: 0; padding-left: 20px; }
 
-.toc li { color: #c7d3e3; font-size: 14.5px; line-height: 1.6; }
+.toc li { color: var(--text-soft); font-size: 14.5px; line-height: 1.6; }
 
 .toc a {
-  color: #9ec1ff;
+  color: var(--link);
   text-decoration: none;
-  border-bottom: 1px solid rgba(158, 193, 255, 0.3);
+  border-bottom: 1px solid var(--link-line);
 }
 
-.toc a:hover { border-bottom-color: rgba(158, 193, 255, 0.8); }
+.toc a:hover { border-bottom-color: var(--link-line-hover); }
 
 .doc .table-wrap {
   margin: 0 0 14px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 2px;
   overflow-x: auto;
 }
 
@@ -72,7 +72,7 @@
 
 .doc thead th {
   padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-tint-strong);
   color: var(--text);
   font-size: 13px;
   font-weight: 600;
@@ -83,19 +83,19 @@
 .doc tbody td {
   padding: 10px 12px;
   border-top: 1px solid var(--line);
-  color: #c7d3e3;
+  color: var(--text-soft);
   vertical-align: top;
 }
 
-.doc tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
+.doc tbody tr:hover { background: var(--surface-tint); }
 
 .callout {
   margin: 14px 0;
   padding: 14px 16px;
   border-left: 3px solid var(--accent);
-  border-radius: 10px;
-  background: rgba(59, 130, 246, 0.08);
-  color: #c7d3e3;
+  border-radius: 2px;
+  background: var(--accent-tint);
+  color: var(--text-soft);
   font-size: 14.5px;
 }
 

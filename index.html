@@ -7,8 +7,19 @@
   <meta name="description" content="Разработка и интеграция 1С: расширения и доработки (УТ, БП, КА, ЕРП), обмены JSON/HTTP, сервисы 1С, автоматизация 1С.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://obmenjson.ru/">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#070b0f">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('site-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#f2f5f7');
+        }
+      } catch (e) { /* приватный режим */ }
+    })();
+  </script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
   <meta property="og:type" content="website">
@@ -93,9 +104,10 @@
 
   <div class="wrap">
     <header class="hero card">
-      <div class="lang-switch" role="group" aria-label="Язык / Language">
+      <div class="lang-switch" role="group" aria-label="Язык и тема / Language and theme">
         <button type="button" data-set-lang="ru" lang="ru">RU</button>
         <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" class="theme-toggle" data-toggle-theme aria-label="Светлая тема"></button>
       </div>
 
       <p class="eyebrow">
@@ -109,8 +121,8 @@
       </h1>
 
       <p class="role">
-        <span class="i18n-ru">Разработка и интеграция 1С: расширения, обмены, автоматизация 1С</span>
-        <span class="i18n-en">1C development &amp; integration: extensions, data exchange, accounting automation</span>
+        <span class="i18n-ru">Разработка и интеграция 1С Предприятие: 1С расширения, 1С обмены, 1С автоматизация</span>
+        <span class="i18n-en">1C:Enterprise development &amp; integration: 1C extensions, 1C data exchange, 1C automation</span>
       </p>
 
       <div class="actions">

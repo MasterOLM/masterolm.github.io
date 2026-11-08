@@ -13,19 +13,21 @@
   gap: 8px;
   padding: 8px 14px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 2px;
+  background: var(--control-bg);
   color: var(--muted);
   font-size: 14px;
   text-decoration: none;
   transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
-.back:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.22); background: var(--card-hover); }
+.back:hover { color: var(--text); border-color: var(--line-strong); background: var(--card-hover); }
 
 .lang-switch.inline {
   position: static;
 }
+
+.topbar .lang-switch { margin-left: auto; }
 
 .badges {
   display: flex;
@@ -36,18 +38,21 @@
 
 .badge {
   padding: 6px 12px;
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  border-radius: 999px;
+  border: 1px solid var(--accent-line);
+  border-radius: 2px;
   background: var(--accent-soft);
-  color: #cfe0ff;
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
+  color: var(--accent-on-soft);
+  font-family: var(--display);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .lead {
   margin: 0 0 24px;
   max-width: 62ch;
-  color: #c7d3e3;
+  color: var(--text-soft);
   font-size: 17px;
 }
 
@@ -64,7 +69,7 @@
   position: relative;
   padding: 14px 16px 14px 44px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 2px;
   background: var(--card);
   font-size: 15px;
 }
@@ -94,7 +99,7 @@
   position: relative;
   padding: 16px 20px 16px 58px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 2px;
   background: var(--card);
 }
 
@@ -108,8 +113,8 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(59, 130, 246, 0.16);
-  color: #bcd4ff;
+  background: var(--accent-soft-strong);
+  color: var(--accent-on-soft-strong);
   font-size: 12.5px;
   font-weight: 700;
 }
@@ -124,7 +129,7 @@
 .flow-node {
   padding: 18px;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 2px;
   background: var(--card);
 }
 
@@ -142,7 +147,7 @@
 .flow-node ul {
   margin: 0;
   padding-left: 18px;
-  color: #c7d3e3;
+  color: var(--text-soft);
   font-size: 13.5px;
   line-height: 1.7;
 }
@@ -163,7 +168,7 @@
 .gallery figure {
   margin: 0;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 2px;
   background: var(--card);
   overflow: hidden;
 }
@@ -176,7 +181,7 @@
   height: auto;
   max-height: 520px;
   object-fit: contain;
-  background: #f3f4f6;
+  background: var(--screenshot-bg);
 }
 
 .gallery figcaption {
@@ -205,7 +210,7 @@
 .spec ul {
   margin: 0;
   padding-left: 18px;
-  color: #c7d3e3;
+  color: var(--text-soft);
   font-size: 14.5px;
   line-height: 1.75;
 }
@@ -227,7 +232,7 @@
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
-.video:hover { background: var(--card-hover); border-color: rgba(59, 130, 246, 0.35); transform: translateY(-1px); }
+.video:hover { background: var(--card-hover); border-color: var(--accent-line); }
 
 .video .play {
   flex: 0 0 auto;
@@ -237,7 +242,7 @@
   place-items: center;
   border-radius: 50%;
   background: var(--accent-soft);
-  color: #cfe0ff;
+  color: var(--accent-on-soft);
   font-size: 14px;
 }
 
@@ -253,8 +258,8 @@
 
 .cta-card {
   padding: 28px;
-  border-color: rgba(59, 130, 246, 0.35);
-  background: linear-gradient(180deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.03));
+  border-color: var(--accent-line);
+  background: var(--cta-grad);
 }
 
 .cta-card h2 {
@@ -267,7 +272,7 @@
 
 .cta-card p {
   margin: 0 0 18px;
-  color: #c7d3e3;
+  color: var(--text-soft);
   max-width: 62ch;
   font-size: 15px;
 }
@@ -300,10 +305,12 @@
 }
 
 .price .sum {
+  font-family: var(--display);
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
 
 .price .desc { color: var(--muted); font-size: 13.5px; }
@@ -312,15 +319,18 @@
   align-self: flex-start;
   margin-bottom: 4px;
   padding: 3px 10px;
-  border-radius: 999px;
+  border-radius: 2px;
   background: var(--accent-soft);
-  color: #cfe0ff;
-  font-size: 12px;
+  color: var(--accent-on-soft);
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .price.best {
-  border-color: rgba(59, 130, 246, 0.45);
-  background: linear-gradient(180deg, rgba(59, 130, 246, 0.14), rgba(59, 130, 246, 0.03));
+  border-color: var(--accent-line-strong);
+  background: var(--best-grad);
 }
 
 .rows {
@@ -339,9 +349,9 @@
   gap: 6px 16px;
   padding: 12px 16px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 2px;
   background: var(--card);
   font-size: 14.5px;
 }
 
-.rows .val { color: #cfe0ff; white-space: nowrap; }
+.rows .val { color: var(--accent-on-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }

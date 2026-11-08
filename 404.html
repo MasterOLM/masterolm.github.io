@@ -5,7 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Страница не найдена — Олег Москвичев</title>
   <meta name="robots" content="noindex">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#070b0f">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('site-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#f2f5f7');
+        }
+      } catch (e) { /* приватный режим */ }
+    })();
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
@@ -13,6 +25,9 @@
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap">
     <header class="hero card">
+      <div class="lang-switch" role="group" aria-label="Тема / Theme">
+        <button type="button" class="theme-toggle" data-toggle-theme aria-label="Светлая тема"></button>
+      </div>
       <p class="eyebrow">404</p>
       <h1>
         <span class="i18n-ru">Страница не найдена</span>

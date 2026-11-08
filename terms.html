@@ -15,8 +15,19 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://obmenjson.ru/assets/og.png">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#070b0f">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('site-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#f2f5f7');
+        }
+      } catch (e) { /* приватный режим */ }
+    })();
+  </script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/legal.css">
@@ -31,9 +42,10 @@
         <span class="i18n-ru">На главную</span>
         <span class="i18n-en">Back to home</span>
       </a>
-      <div class="lang-switch inline" role="group" aria-label="Язык / Language">
+      <div class="lang-switch inline" role="group" aria-label="Язык и тема / Language and theme">
         <button type="button" data-set-lang="ru" lang="ru">RU</button>
         <button type="button" data-set-lang="en" lang="en">EN</button>
+        <button type="button" class="theme-toggle" data-toggle-theme aria-label="Светлая тема"></button>
       </div>
     </div>
 
@@ -41,7 +53,7 @@
       <h1>Лицензионное соглашение (публичная оферта)</h1>
       <p class="meta">Редакция от 27.10.2026 · расширения «Обмен JSON» (УТ / КА / ЕРП → БП 3.0)</p>
 
-      <p class="i18n-en" style="color:#94a3b8">
+      <p class="i18n-en" style="color:var(--muted)">
         This legal document is provided in Russian; the Russian text prevails. If you need an English summary or a
         bilingual agreement for procurement, write to m_aster@bk.ru.
       </p>

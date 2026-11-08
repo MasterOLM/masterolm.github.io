@@ -7,8 +7,19 @@
   <meta name="description" content="Пошаговое руководство: установка расширений в УТ/КА/ЕРП и БП, снятие флагов защиты, каталог обмена, настройки, регламентный обмен и типовые проблемы.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://obmenjson.ru/install.html">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#070b0f">
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('site-theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#f2f5f7');
+        }
+      } catch (e) { /* приватный режим */ }
+    })();
+  </script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/legal.css">
@@ -93,6 +104,9 @@
         <span>К описанию решения</span>
       </a>
       <a class="back" href="faq.html">Частые вопросы</a>
+      <div class="lang-switch inline" role="group" aria-label="Тема / Theme">
+        <button type="button" class="theme-toggle" data-toggle-theme aria-label="Светлая тема"></button>
+      </div>
     </div>
 
     <article class="hero card page doc">

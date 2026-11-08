@@ -13,17 +13,19 @@
   gap: 8px;
   padding: 8px 14px;
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 2px;
+  background: var(--control-bg);
   color: var(--muted);
   font-size: 14px;
   text-decoration: none;
   transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
-.back:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.22); background: var(--card-hover); }
+.back:hover { color: var(--text); border-color: var(--line-strong); background: var(--card-hover); }
 
 .lang-switch.inline { position: static; }
+
+.topbar .lang-switch { margin-left: auto; }
 
 .page { padding: 32px; }
 
@@ -42,9 +44,9 @@
   color: var(--text);
 }
 
-.doc h3 { margin: 18px 0 8px; font-size: 15px; color: #cfe0ff; }
+.doc h3 { margin: 18px 0 8px; font-size: 15px; color: var(--accent-on-soft); }
 
-.doc p, .doc li { color: #c7d3e3; font-size: 15px; line-height: 1.7; }
+.doc p, .doc li { color: var(--text-soft); font-size: 15px; line-height: 1.7; }
 
 .doc p { margin: 0 0 10px; }
 
@@ -52,24 +54,24 @@
 
 .doc li + li { margin-top: 4px; }
 
-.doc a { color: #9ec1ff; text-decoration: none; border-bottom: 1px solid rgba(158, 193, 255, 0.35); }
+.doc a { color: var(--link); text-decoration: none; border-bottom: 1px solid var(--link-line); }
 
-.doc a:hover { border-bottom-color: rgba(158, 193, 255, 0.8); }
+.doc a:hover { border-bottom-color: var(--link-line-hover); }
 
 .doc code {
   padding: 1px 6px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  background: var(--code-bg);
   font-size: 13.5px;
 }
 
 /* Незаполненные реквизиты — заметно, чтобы не забыть подставить */
 .ph {
   padding: 0 6px;
-  border-bottom: 1px dashed rgba(255, 176, 32, 0.8);
-  color: #ffd479;
-  background: rgba(255, 176, 32, 0.08);
-  border-radius: 4px;
+  border-bottom: 1px dashed var(--warn-line);
+  color: var(--warn);
+  background: var(--warn-bg);
+  border-radius: 2px;
 }
 
 .steps-list {
@@ -86,7 +88,7 @@
   position: relative;
   padding: 18px 20px 18px 62px;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 2px;
   background: var(--card);
 }
 
@@ -100,8 +102,8 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(59, 130, 246, 0.16);
-  color: #bcd4ff;
+  background: var(--accent-soft-strong);
+  color: var(--accent-on-soft-strong);
   font-size: 13px;
   font-weight: 700;
 }
@@ -120,15 +122,15 @@
 
 .box h3 { margin: 0 0 10px; font-size: 15px; }
 
-.box ul { margin: 0; padding-left: 20px; color: #c7d3e3; font-size: 14.5px; line-height: 1.75; }
+.box ul { margin: 0; padding-left: 20px; color: var(--text-soft); font-size: 14.5px; line-height: 1.75; }
 
 .note-line {
   margin-top: 20px;
   padding: 14px 16px;
   border-left: 3px solid var(--accent);
-  border-radius: 8px;
-  background: rgba(59, 130, 246, 0.08);
-  color: #c7d3e3;
+  border-radius: 2px;
+  background: var(--accent-tint);
+  color: var(--text-soft);
   font-size: 14.5px;
 }
 
